@@ -1,0 +1,355 @@
+#header {
+    height: 100px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.left {
+    margin-top: 1em;
+    width: 15%;
+}
+.left img {
+    width: 170px;
+    height: 65px;
+}
+.header-bar {
+    width : 80%;
+    display: flex;
+    margin:auto;
+}
+.menu {
+   width:70%;
+   line-height: 6em;
+
+}
+.menu ul li {
+    width: 100px;
+    text-align: center;
+    list-style: none;
+    font-size: 14px;
+    margin-left: 1em;
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+}
+ .menu ul li:hover {
+    color: #44cdc7;
+    border:1px solid #44cdc7;
+    border-radius: 35px;
+   
+
+}
+.menu ul {
+    display: inline-flex;
+    line-height: 2em;
+    
+}
+.menu ul li {
+    position: relative;
+}
+@keyframes ex {
+    from {height: 0px;}
+    to {height: 214px;}
+}
+.menu .catalogues {
+    min-height: 0;
+    display: none;
+    left: 0;
+    position:absolute;
+    top: 33px;
+    animation-name: ex;
+    animation-duration: 0.5s;
+    width: 200px;
+    background-color: white;
+    padding: 0 !important;
+    overflow: hidden;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+
+}
+.catalogues li {
+    padding: 8px 35px;
+    padding-left: 0px;
+    width: 150px !important;
+    text-align: left !important;
+    color: black;
+    border-bottom: 1px solid #ccc;
+}
+.catalogues li:hover {
+    border-bottom: 1px solid #ccc !important;
+    background-color: white;
+    color: #44cdc7;
+    border-radius: 0 !important;
+    border-top: 0 !important;
+    border-left:  0 !important;
+    border-right:  0 !important;
+}
+.menu ul li:hover .catalogues {
+     display: block;
+}
+
+.menu ul li:hover .catalogues ul li {
+    line-height: 3em;
+    text-align: left;
+    background: white;
+    border-radius: 0;
+    color:black;
+    width: 176px;
+}
+.menu a {
+    text-decoration: none;
+    color:black;
+}
+
+.catalogues ul {
+    margin-top: 2px;
+    border: 1px solid #ccc;
+    width: 190px;
+    display: none;
+    padding:0;
+}
+
+
+.right {
+    width: 15%;
+    display: flex;
+    
+}
+
+.account {
+    margin-top: 35px;
+    padding-right:25px;
+    position: relative;
+    
+}
+.account:hover .account-1 {
+    display: block;
+    background: white;
+    z-index: 10;
+    width: 180px;
+    height: 125px;
+    top: 2em;
+    padding: 5px 5px 0px 10px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.account:hover .account-1 p {
+    border: 1px solid #ccc;
+    line-height: 2em;
+    border-radius: 35px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.account-1 {
+    display:none;
+    position: absolute;
+}
+.account-1 a {
+    text-decoration: none;
+}
+.account-1 p {
+    color:black;
+}
+.account-1 p:hover {
+    background-color: #44cdc7;
+    color:#fff;
+    
+}
+.account-1 a:hover {
+    color:#fff;
+}
+.cart {
+    margin-top:35px;
+    padding-right:25px;
+    position: relative;
+}
+.cart span {
+    position: absolute;
+    background-color: #44cdc7;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    right :16px;
+    color: white;
+}
+.search-bar {
+   margin-top: 38px;
+}
+.search-bar img {
+    filter: invert(1);
+}
+.title-bar {
+    width: 80%;
+    margin:auto;
+}
+.title-bar i {
+    font-size:14px;
+    color:grey;
+}
+.title-bar a {
+    text-decoration: none;
+    color : grey;
+    font-size:17px;
+}
+.title-bar a:hover {
+    color:#44cdc7;
+}
+#main {
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+    padding-top: 1em;
+    padding-bottom:3em;
+}
+.product {
+    width: 80%;
+    margin:auto;
+    display: flex;
+}
+.left-part {
+    width: 25%;
+
+}
+.product-category li {
+    list-style:none;
+    line-height: 35px;
+    font-size: 17px;
+}
+.product-category ul {
+    padding:0;
+}
+.product-category h2 {
+    font-weight: 400;
+}
+.favorite-product-information {
+    display: flex;
+    width: 80%;
+    padding-bottom: 1em;
+}
+
+.product-name p {
+    font-size:17px;
+}
+.images-product img {
+    width: 98px;
+    height: 98px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+
+}
+.favorite-product h2 {
+    font-weight: 400;
+}
+.information-product {
+    padding-left: 1em;
+    margin-top:-1em;
+}
+.information-product span {
+    color: #ef2c2c;
+    font-weight: 700;
+}
+.information-product strike {
+    color: #8d90a6;
+    text-decoration: line-through;
+    font-size: 14px;
+}
+.product-price {
+    margin-top:-8px;
+}
+.content-brand {
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+.container {
+    width: 75%;
+}
+.title-all-product span {
+    font-weight: 400;
+    padding-right:1em;
+}
+.images img {
+    width: 260px;
+    height: 260px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.product-frame {
+    width: 35%;
+    text-align: center;
+    justify-content: space-between;
+   
+}
+.name h3 p {
+    font-family: "Noto Serif",serif;
+    font-size: 20px;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.name p:hover {
+    color:#44cdc7;
+}
+.price {
+    text-align: center;
+}
+.price span {
+    color:#ef2c2c;
+    font-weight: 700;
+    font-size: 18px;
+    
+}
+.price strike {
+    color:#8d90a6;
+    font-size:14px;
+}
+.button-cart p {
+    border: 2px solid #ef2c2c;
+    width: 130px;
+    margin-left: 3em;
+    padding: 10px 25px;
+    color: #ef2c2c;
+    border-radius: 30px;
+    font-weight: 700;
+}
+.button-cart p:hover {
+    color:#fff;
+    background-color:#94e3df;
+    border:1px solid #94e3df;
+}
+.button-cart a {
+    text-decoration: none;
+}
+.all-product {
+    display:flex;
+}
+.row-title-footer hr {
+    width: 100px;
+    height: 1px;
+    margin: 0;
+    border: 1px solid #44cdc7;
+    background-color: #44cdc7;
+}
+.row-title-footer p {
+    font-size:17px;
+    font-weight: 700;
+
+}
+.site-footer {
+    width: 80%;
+    margin:auto;
+    display: flex;
+    margin-top:2em;
+}
+.row-footer-1 {
+    width: 25%;
+}
+.row-icon-footer {
+    margin-top:3px;
+    margin-right: 1em;
+}
+.row-icon-footer i {
+    padding-bottom: 6px;
+    color:#44cdc7;
+}
+.row-content-footer {
+    display:flex;
+}
+
+.row-content-infor p {
+    font-family: "Noto Serif",serif;
+    font-size: 18px;
+    color: #292929;
+}
