@@ -1,0 +1,139 @@
+.address {
+    margin-top: 2rem;
+    font-size: 19px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+    padding:15px;
+    display:block;
+    z-index:1;
+}
+.row-address {
+    padding: 15px;
+    width: 97%;
+    display:none;
+    z-index: 9;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.name-customer {
+    font-weight: bold;
+    padding-right: 5px;
+    width: 25%;
+}
+.add {
+    line-height: 2em;
+    font-size: 17px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right:1rem;
+}
+.set-up-address {
+    border: 1px solid #ccc;
+    line-height: 2em;
+    font-size: 17px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.order {
+    padding:15px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+    margin-top:1rem;
+}
+.amount-items-order {
+    width: 15%;
+    padding-left:5em;
+    line-height: 4.5em;
+}
+.total-product-money {
+   box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+    
+}
+.money {
+    font-size: 20px;
+    padding-right: 5.5em;
+}
+.payment {
+    width: 80%;
+    margin:auto;
+
+}
+
+.total-buy-product {
+    box-shadow: 0px 3px 8px 0px rgb(0 0 0 / 7%);
+    padding: 15px;
+    text-align: right;
+    font-size: 19px;
+    padding-right: 7rem;
+    margin-top:1rem;
+    font-family: sans-serif;
+}
+.btn-order-product button {
+    width: 210px;
+    height: 40px;
+    border: 1px solid #ee4d2d;
+    color: #fff;
+    background-color: #ee4d2d;
+    font-size: 16px;
+}
+.btn a {
+    padding: 15px 50px 15px 50px;
+    border: 1px solid #ee4d2d;
+    background-color: #ee4d2d;
+    color: #fff;
+    text-decoration: none;
+}
+.row-title-footer hr {
+    width: 100px;
+    height: 1px;
+    margin: 0;
+    border: 1px solid #44cdc7;
+    background-color: #44cdc7;
+}
+.row-title-footer p {
+    font-size:17px;
+    font-weight: 700;
+
+}
+.site-footer {
+    width: 80%;
+    margin:auto;
+    display: flex;
+    margin-top:2em;
+}
+.row-footer-1 {
+    width: 25%;
+}
+.row-icon-footer {
+    margin-top:3px;
+    margin-right: 1em;
+}
+.row-icon-footer i {
+    padding-bottom: 6px;
+    color:#44cdc7;
+}
+.row-content-footer {
+    display:flex;
+}
+
+.row-content-infor p {
+    font-family: "Noto Serif",serif;
+    font-size: 18px;
+    color: #292929;
+}
+
+.set-up-address {
+    border: 1px solid #ccc;
+    /* color: black; */
+    line-height: 2em;
+    font-size: 17px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.add button {
+    width: 160px;
+    height: 38px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    margin-right: 1rem;
+    font-size: 14px;
+}

@@ -5,28 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KhachHang extends Model
+class Validate extends Model
 {
     use HasFactory;
     protected $table = 'khachhang';
     protected $fillable = [
         'TenKhachHang',
+        'DiaChi',
+        'SDT',
         'Email',
         'MatKhau',
     ];
-    public static function create(
+    public static function Validation(
         $TenKH,
+        $DiaChi,
+        $SoDienThoai,
         $Email,
         $MatKhau
     ) {
-        $kh= new KhachHang();
+        $kh= new Validate();
         $kh->TenKhachHang = $TenKH;
+        $kh->DiaChi = $DiaChi;
+        $kh->SDT = $SoDienThoai;
         $kh->Email = $Email;
         $kh->MatKhau = $MatKhau;
-        $kh->save();
     }
     public $timestamps = false;
-
-
-
 }

@@ -2,10 +2,11 @@
 <head>
     <title>Delta Comestic - Shop Mỹ Phẩm Hàn Quốc Tốt Uy Tín</title>
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
-<body>
+<body>  
     @include('layout/header')
     <div id="advertisement">
         <div class="slide-1">
@@ -111,16 +112,15 @@
                @for($i = 0;$i < sizeof($product); $i++)
                 <div class="product-frame">
                     <div class="images-product">
-                        <img src="./img/{{ $product[$i]->HinhAnh }}">
+                       <a href = "{{ url('sanpham/thongtinsanpham/'.$product[$i]->IDSanPham.'&&'.$product[$i]->IDNhomSP) }}"> <img src="./img/{{ $product[$i]->HinhAnh }}"></a>
                     </div>
                     <div class="product-name">
                         <h3>
-                            <p>{{ $product[$i]->TenSanPham }}</p>
+                           <a href = "{{ url('sanpham/thongtinsanpham/'.$product[$i]->IDSanPham) }}" style = "text-decoration:none;color:black;"><p>{{ $product[$i]->TenSanPham }}</p></a>
                         </h3>
                     </div>
                     <div class="price-product">
-                        <span>{{ number_format($product[$i]->GiaSP * 0.9)}}</span>
-                        <strike>{{ number_format($product[$i]->GiaSP) }}</strike>
+                        <span>{{ number_format($product[$i]->GiaSP)}}</span>
                     </div>
                     <div class="button-cart">
                         <a href="#">

@@ -1,0 +1,89 @@
+#header {
+    height: 100px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.left {
+    margin-top: 1em;
+    width: 15%;
+}
+.left img {
+    width: 170px;
+    height: 65px;
+}
+.header-bar {
+    width : 80%;
+    display: flex;
+    margin:auto;
+}
+.menu {
+   width:60%;
+   line-height: 6em;
+
+}
+.menu p {
+    font-size: 30px;
+    line-height: 3rem;
+    border-left: 1px solid;
+    height: 3rem;
+    color: unset;
+    padding-left: 1rem;
+    font-family: sans-serif;
+    color: #44cdc7;
+}
+
+
+.right {
+    width: 15%;
+    display: flex;
+    
+}
+
+.account {
+    margin-top: 35px;
+    padding-right:25px;
+    position: relative;
+    white-space:nowrap;
+}
+.account li a {
+    color: black;
+    font-size:18px;
+    text-decoration:none;
+}
+.account a:hover {
+    color:#44cdc7;
+}
+.account:hover .account-1 {
+    display: block;
+    background: white;
+    z-index: 10;
+    width: 180px;
+    height: 75px;
+    top: 2em;
+    padding: 5px 5px 0px 10px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.account:hover .account-1 p {
+    border: 1px solid #ccc;
+    line-height: 2em;
+    border-radius: 35px;
+    text-align: center;
+    font-size: 17px;
+}
+.account-1 {
+    display:none;
+    position: absolute;
+}
+.account-1 a {
+    text-decoration: none;
+}
+.account-1 p {
+    color:black;
+}
+.account-1 p:hover {
+    background-color: #44cdc7;
+    color:#fff;
+    
+}
+.account-1 a:hover {
+    color:#fff;
+}

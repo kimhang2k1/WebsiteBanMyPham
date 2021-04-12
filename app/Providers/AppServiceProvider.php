@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Support\Facades\view;
 use Illuminate\Support\ServiceProvider;
-
+use App\Models\ProductGroup;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function($view) {
+            $loai_sp = ProductGroup::all();
+            $view->with('loai_sp', $loai_sp);
+        });
     }
 }

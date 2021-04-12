@@ -16,54 +16,97 @@
     margin:auto;
 }
 .menu {
-   width:80%;
+   width:60%;
    line-height: 6em;
 
 }
 .menu ul li {
-    width: 120px;
+    width: 100px;
     text-align: center;
     list-style: none;
     font-size: 14px;
+    margin-left: 1em;
     font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
-.active, .menu ul li:hover {
+ .menu ul li:hover {
     color: #44cdc7;
     border:1px solid #44cdc7;
     border-radius: 35px;
    
 
 }
+.menu a {
+    text-decoration: none;
+    color:black;
+}
 .menu ul {
     display: inline-flex;
     line-height: 2em;
+    
+}
+.menu ul li {
+    position: relative;
+}
+@keyframes ex {
+    from {height: 0px;}
+    to {height: 214px;}
+}
+.menu .catalogues {
+    min-height: 0;
+    display: none;
+    left: 0;
+    position:absolute;
+    top: 33px;
+    animation-name: ex;
+    animation-duration: 0.5s;
+    width: 200px;
+    background-color: white;
+    padding: 0 !important;
+    overflow: hidden;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
 
+}
+.catalogues li {
+    padding: 8px 35px;
+    padding-left: 0px;
+    width: 150px !important;
+    text-align: left !important;
+    color: black;
+    border-bottom: 1px solid #ccc;
+}
+.catalogues li:hover {
+    border-bottom: 1px solid #ccc !important;
+    background-color: white;
+    color: #44cdc7;
+    border-radius: 0 !important;
+    border-top: 0 !important;
+    border-left:  0 !important;
+    border-right:  0 !important;
 }
 .menu ul li:hover .catalogues {
-    display: block;
-    position:absolute;
-   
+     display: block;
+}
 
-}
-.menu ul li:hover .catalogues ul {
-    display: block;
-}
 .menu ul li:hover .catalogues ul li {
-    border-bottom: 1px solid #ccc;
-    line-height: 3em;
+    /* line-height: 3em;
     text-align: left;
-    padding-left: 1em;
-    background: transparent;
+    background: white;
     border-radius: 0;
     color:black;
-
+    width: 176px; */
 }
+.menu a {
+    text-decoration:none;
+}
+
 .catalogues ul {
-    margin-top: 20px;
+    margin-top: 0;
     border: 1px solid #ccc;
-    width: 155px;
+    width: 200px;
     display: none;
     padding:0;
+  
+
 }
 
 
@@ -76,7 +119,51 @@
 .account {
     margin-top: 35px;
     padding-right:25px;
+    position: relative;
+    white-space:nowrap;
+}
+.account li a {
+    color: black;
+    font-size:18px;
+    text-decoration:none;
+}
+.account a:hover {
+    color:#44cdc7;
+}
+.account:hover .account-1 {
+    display: block;
+    background: white;
+    z-index: 10;
+    width: 180px;
+    height: 75px;
+    top: 2em;
+    padding: 5px 5px 0px 10px;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.07);
+}
+.account:hover .account-1 p {
+    border: 1px solid #ccc;
+    line-height: 2em;
+    border-radius: 35px;
+    text-align: center;
+    font-size: 17px;
+}
+.account-1 {
+    display:none;
+    position: absolute;
+}
+.account-1 a {
+    text-decoration: none;
+}
+.account-1 p {
+    color:black;
+}
+.account-1 p:hover {
+    background-color: #44cdc7;
+    color:#fff;
     
+}
+.account-1 a:hover {
+    color:#fff;
 }
 .cart {
     margin-top:35px;
@@ -98,4 +185,38 @@
 }
 .search-bar img {
     filter: invert(1);
+}
+
+.cart:hover .name-product-cart {
+    overflow: hidden;
+}
+.row-shopping-cart {
+    display:none;
+}
+.cart:hover .row-shopping-cart {
+    width: 400px;
+    margin-top: 1rem;
+    border: 1px solid #ccc;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    padding: 15px;
+    display:block;
+    z-index:1;
+}
+.cart:hover .btn-look-cart button {
+    float: right;
+    width: 140px;
+    height: 38px;
+    background-color: #ee4d2d;
+    border: 1px solid #ee4d2d;
+    color: #fff;
+    font-size:16px;
+}
+.cart:hover .name-product-cart p {
+    margin:0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 3rem;
 }
