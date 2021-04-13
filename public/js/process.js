@@ -35,14 +35,25 @@ function increaseNumber(STT) {
     var sum = new Number(document.getElementById('mainPrice').innerHTML.replaceAll(',',''));
     var num = new Number(document.getElementById(STT +'amount').value)
     num++;
-   document.getElementById(STT+'amount').value = num;
-   var price = new Number(document.getElementById(STT +'money').innerText.replace(',',''))
-   var bill = num * price;
-   sum+= price;
-   document.getElementById(STT +'total-money').innerHTML = bill.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-   if (document.getElementById(STT + 'Checkbox').checked) {
-    document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-   }
+    document.getElementById(STT+'amount').value = num;
+    var price = new Number(document.getElementById(STT +'money').innerText.replace(',',''))
+    var bill = num * price;
+    sum+= price;
+    document.getElementById(STT +'total-money').innerHTML = bill.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    if (document.getElementById(STT + 'Checkbox').checked) {
+      document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+    $.ajax({
+        method  : "GET",
+        url : "/sua-so-luong-san-pham",
+        data : {
+            num : num,
+            STT : STT
+        },
+        success:function(response) {
+
+        }
+})
    
 }
 function decreaseNumber(STT) {
@@ -53,12 +64,23 @@ function decreaseNumber(STT) {
         num = 1;
     document.getElementById(STT+'amount').value = num;
     var price = new Number(document.getElementById(STT +'money').innerText.replace(',',''))
-   var bill = num * price;
-   sum-= price;
-   document.getElementById(STT +'total-money').innerHTML = bill.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-   if (document.getElementById(STT + 'Checkbox').checked) {
-         document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-   }
+    var bill = num * price;
+    sum-= price;
+    document.getElementById(STT +'total-money').innerHTML = bill.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    if (document.getElementById(STT + 'Checkbox').checked) {
+            document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+    $.ajax({
+        method  : "GET",
+        url : "/sua-so-luong-san-pham",
+        data : {
+            num : num,
+            STT: STT
+        },
+        success:function(response) {
+           
+        }
+    })
 }
 function toggle(source) {
     var sum = new Number(document.getElementById('mainPrice').innerHTML.replaceAll(',',''));
@@ -74,7 +96,7 @@ function toggle(source) {
                document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
     else {
-        for(var i=0; i < checkboxes.length;i++) {
+        for(var i = 0; i < checkboxes.length ;i++) {
             checkboxes[i].checked = false;
           }
         document.getElementById('mainPrice').innerHTML = 0;
@@ -109,23 +131,30 @@ function toggle(source) {
     }
     else {
         element.checked 
-        num--;
-        var id = element.parentElement.parentElement.id;
-        var price = new Number(document.getElementById(id +'total-money').innerHTML.replaceAll(',',''));
-        sum -= price;
-        document.getElementById('numberSelected').innerHTML = num;
-        document.getElementById('totalProduct').innerHTML = num;
-        document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        $.ajax({
-            method: "GET",
-            url : "xoa-san-pham-thanh-toan",
-            data : {
-                id : id
-            },
-            success : function() {
-                
-            }
-        })
+        if(num <= 0) {
+            document.getElementById('numberSelected').innerHTML = 0;
+            document.getElementById('mainPrice').innerHTML = 0;
+        }
+        else {
+            num--;
+            var id = element.parentElement.parentElement.id;
+            var price = new Number(document.getElementById(id +'total-money').innerHTML.replaceAll(',',''));
+            sum -= price;
+            document.getElementById('numberSelected').innerHTML = num;
+            document.getElementById('totalProduct').innerHTML = num;
+            document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+            $.ajax({
+                method: "GET",
+                url : "xoa-san-pham-thanh-toan",
+                data : {
+                    id : id
+                },
+                success : function() {
+                    
+                }
+            })
+        }
+      
     }
   }
  

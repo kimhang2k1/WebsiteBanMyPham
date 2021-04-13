@@ -41,9 +41,7 @@ function brand(id) {
 }
 
 function addCart(IDSanPham) {
-    if (document.getElementById('idColor').value == "") 
-        alert('Vui lòng chọn loại sản phẩm !!');
-    else 
+   
     $.ajax({
         method: "GET",
         url : "/them-vao-gio-hang",
@@ -60,18 +58,13 @@ function addCart(IDSanPham) {
 }
 
 function loadDeliveryAddress() {
-    $.ajax({
-        method:"GET",
-        url : "/load-dia-chi",
-        success:function(response) {
             var delivery = document.getElementsByClassName('row-address')[0];
             delivery.style.display = 'block';
             document.getElementsByClassName('address')[0].style.display = 'none'
 
-        }
-
-    })
+    
 }
+
 function deleteCart(IDSanPham, IDMau, STT) {
 
     $.ajax({

@@ -45,7 +45,9 @@ Route::get('/dangxuat',function() {
     Session::flush();
     return redirect()->to("trangchu");
 });
-
+Route::get('/loai-dia-chi', function(){
+   
+});
 Route::get('/sanpham',function() {
     $thuongHieu = DB::table('thuonghieu')->whereRaw(" not IDThuongHieu = 'TH00013' ")->get();
     $product = DB::table('sanpham')->get();
@@ -73,7 +75,7 @@ Route::get('gio-hang', function(Request $request) {
 });
 
 
-Route::get('/checkout-page/{idSanPham}&&{idMau}&&{stt}', [CartController::class, 'getProductInCart']);
+Route::get('/checkout-page', [CartController::class, 'getProductInCart']);
 
 Route::get('them-vao-gio-hang', function(Request $request) {
     if (session()->has('user')) {
@@ -177,4 +179,9 @@ Route::get("xoa-san-pham-thanh-toan",function(Request $request){
         else 
         Session::forget('product-pay');
     }
+});
+
+Route::get('sua-so-luong-san-pham', function(Request $request) {
+    $id = Session::get('user')[0]->IDKhachHang;
+    DB::update("update giohang set SoLuong = ?  where IDKhachHang = ? and STT = ? ",[$request->num,$id,$request->STT]);   
 });

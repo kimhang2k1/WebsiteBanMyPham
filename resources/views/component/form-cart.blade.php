@@ -53,7 +53,7 @@
                             </div>
                             <div class = "number">₫<b id="mainPrice">0</b></div>
                             <div class=  "btn">
-                              <a href = "{{ url('checkout-page/'.$cart[0]->IDSanPham.'&&'.$cart[0]->IDMau.'&&'. $cart[0]->STT) }} ">Mua Hàng</a>
+                              <a href = "{{ url('checkout-page') }} ">Mua Hàng</a>
                             </div>
 
                         </div>

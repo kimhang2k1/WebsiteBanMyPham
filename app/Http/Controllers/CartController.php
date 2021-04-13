@@ -12,21 +12,21 @@ use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
   
-    public function getProductInCart($idSanPham) {
+    public function getProductInCart() {
         $id = Session::get('user')[0]->IDKhachHang;
         $product_pay = Session::get('product-pay');
-
-
        if (count($product_pay) > 0) {
         $newArray = array();
         foreach ($product_pay as $key => $value) {
             $newArray[$key] = DB::table('giohang')->leftJoin('mausanpham', 'mausanpham.IDMau', 'giohang.IDMau')
-            ->leftJoin('sanpham', 'giohang.IDSanPham', 'sanpham.IDSanPham')
+            ->JOIN('sanpham', 'giohang.IDSanPham', 'sanpham.IDSanPham')
             ->where('IDKhachHang', '=', $id)
             ->where('giohang.STT','=', $value)
             ->get()[0];
         Session::forget('product-pay');
+       
         }
+        
         
         
         $quan = DB::table('quan/huyen')->where('IDThanhPho','=', NULL)->get();

@@ -59,16 +59,16 @@
                                {{ $o->TenSanPham }}
                             </div>
                         </div>
-                        <div class  = "price-items-order" style = "text-align: center;line-height: 4.5em;  width: 15%;">{{ $o->GiaSP }}</div>
+                        <div class  = "price-items-order" style = "text-align: center;line-height: 4.5em;  width: 15%;">{{ number_format($o->GiaSP) }}</div>
                         <div class = "amount-items-order">{{ $o->SoLuong }}</div>
-                        <div class = "total-items" style= "width:15%;line-height: 4.5em;" id = "totalProduct">{{ $o->GiaSP *  $o->SoLuong  }} </div>
+                        <div class = "total-items" style= "width:15%;line-height: 4.5em;" id = "totalProduct">{{ number_format( $o->GiaSP *  $o->SoLuong ) }} </div>
                        
                     </div>
                     @endforeach
                 </div>
             </div>  
             <div class  = "total-buy-product">  
-               <p style= "color:grey;">Tổng số tiền : <span style = "color: #ef2c2c; font-size: 25px; font-family: sans-serif;" id = "totalMoney">₫121,000</span> </p>
+               <p style= "color:grey;">Tổng số tiền : <span style = "color: #ef2c2c; font-size: 25px; font-family: sans-serif;" id = "totalMoney"></span> </p>
                <div class = "btn-order-product" style= "display:flex;">
                    <p style = "padding-right: 22rem; font-size: 14px;">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo Điều Khoản của Shop</p>
                    <button type = "submit">Đặt Hàng </button>
