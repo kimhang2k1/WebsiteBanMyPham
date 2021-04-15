@@ -147,7 +147,7 @@ function toggle(source) {
                 method: "GET",
                 url : "xoa-san-pham-thanh-toan",
                 data : {
-                    id : id
+                    id : id,
                 },
                 success : function() {
                     

@@ -49,15 +49,21 @@
                     @foreach($order as $o) 
                     <div class = "the-items-order" style= "display:flex;padding:15px;font-size:17px;">
                         <div class  = "items-order" style= "display:flex;width:55%;">
-                            <div class = "number-order" style = "line-height: 4em;padding-right: 2rem;">
-                                 1
-                            </div>
                             <div class = "images-items-order" style="padding-right:1rem;">
                                 <img src= "/img/{{ $o->HinhAnh}}" style ="width:80px;">
                             </div>
-                            <div class = "name-items" style= "line-height:5em;">
-                               {{ $o->TenSanPham }}
+                            <div class = "name-items" style= "line-height:5em;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;width:50%;">
+                              <a href = "#" style="text-decoration: none;color: black;"> {{ $o->TenSanPham }}</a>
                             </div>
+                            @if($o->IDMau != NULL)
+                            <div class = "product-type" style="margin-left:4rem;line-height: 5rem;color:grey;">
+                                Loại: {{ $o->TenMau}} 
+                            </div>
+                            @else 
+                            <div class = "product-type">
+                                
+                            </div>
+                            @endif
                         </div>
                         <div class  = "price-items-order" style = "text-align: center;line-height: 4.5em;  width: 15%;">{{ number_format($o->GiaSP) }}</div>
                         <div class = "amount-items-order">{{ $o->SoLuong }}</div>
@@ -65,15 +71,43 @@
                        
                     </div>
                     @endforeach
+                    <?php 
+                       $sum = 0;
+                       foreach ($order as $key => $value) {
+                         $thanhTien = $order[$key]->GiaSP * $order[$key]->SoLuong;
+                          $sum += $thanhTien;
+                       }
+                       
+                    
+                    ?>
                 </div>
             </div>  
             <div class  = "total-buy-product">  
-               <p style= "color:grey;">Tổng số tiền : <span style = "color: #ef2c2c; font-size: 25px; font-family: sans-serif;" id = "totalMoney"></span> </p>
-               <div class = "btn-order-product" style= "display:flex;">
-                   <p style = "padding-right: 22rem; font-size: 14px;">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo Điều Khoản của Shop</p>
+            <div class="infor-money-order-items">
+                   <div class="row-infor-name-money" style="grid-row-start: 1;grid-row-end: 1;height: 40px;">
+                        Tổng số tiền 
+                   </div>
+                   <div class="row-infor-total-money-items" style="grid-column-start: 3;grid-column-end: 6;">
+                          ₫{{ number_format($sum)}}
+                   </div>
+                   <div class="row-infor-name-money" style="grid-row-end: 8;grid-row-start: 3;">
+                        Tổng thanh toán
+                   </div>
+                   <div class="row-infor-total-money-items" style=" grid-row-start: 2; grid-column-start: 5;grid-column-end: 5; ">
+                           ₫{{ number_format(25000)}}
+                   </div>
+                   <div class="row-infor-name-money" style="grid-row-start: 2;grid-row-end: 3;height: 40px;">
+                       Phí vận chuyển 
+                   </div>
+                   <div class="row-infor-total-money-items" style="grid-column-start: 5;grid-column-end: 5;font-size:29px;color:#ee4d2d;">
+                           <span>₫</span>{{ number_format($sum + 25000)}}
+                   </div>
+               </div>
+            </div>
+            <div class = "btn-order-product" style= "display: flex;  padding: 15px;border: 1px solid #f1f0ed;border-top: none; background-color: #fffefb;">
+                   <p style = "padding-right: 22rem; font-size: 18px;">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo Điều Khoản của Shop</p>
                    <button type = "submit">Đặt Hàng </button>
                 </div>
-            </div>
         </div>
      </div>
      

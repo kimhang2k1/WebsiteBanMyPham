@@ -24,10 +24,9 @@ class CartController extends Controller
             ->where('giohang.STT','=', $value)
             ->get()[0];
         Session::forget('product-pay');
-       
+     
         }
-        
-        
+
         
         $quan = DB::table('quan/huyen')->where('IDThanhPho','=', NULL)->get();
         $thanhPho = DB::table('tinh/thanhpho')->get();

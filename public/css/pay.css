@@ -60,12 +60,14 @@
 
 .total-buy-product {
     box-shadow: 0px 3px 8px 0px rgb(0 0 0 / 7%);
-    padding: 15px;
+    padding: 30px;
     text-align: right;
-    font-size: 19px;
+    font-size: 16px;
     padding-right: 7rem;
-    margin-top:1rem;
+    border-bottom: 2px dashed #f1f0ed;
+    border-top: 1px solid #f1f0ed;
     font-family: sans-serif;
+    background-color: #fffefb;
 }
 .btn-order-product button {
     width: 210px;
@@ -82,6 +84,15 @@
     color: #fff;
     text-decoration: none;
 }
+.infor-money-order-items {
+    display: grid;
+    grid-template-columns: 1fr max-content max-content;
+    grid-template-rows: auto;
+    grid-column-gap: 20px;
+    font-size:16px;
+    color:grey;
+}
+
 .row-title-footer hr {
     width: 100px;
     height: 1px;
