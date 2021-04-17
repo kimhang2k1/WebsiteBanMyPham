@@ -13,6 +13,7 @@ use Auth;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\DiaChi;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,7 @@ Route::get('sanphamsapxep', [productController::class, 'sapXepGia']);
 Route::get('sanphamtheothuonghieu', [productController::class, 'getSanPhambyThuongHieu']);
 
 Route::get('gio-hang', function(Request $request) {
+    $id = Session::get('user')[0]->IDKhachHang;
     $cart = DB::table('giohang')->JOIN('sanpham', 'giohang.IDSanPham', '=', 'sanpham.IDSanPham')
     ->leftJoin('mausanpham', 'mausanpham.IDMau', '=', 'giohang.IDMau')->where('IDKhachHang', '=', Session::get('user')[0]->IDKhachHang)->get();
     return view('cart')->with('cart', $cart);
@@ -185,3 +187,6 @@ Route::get('sua-so-luong-san-pham', function(Request $request) {
     $id = Session::get('user')[0]->IDKhachHang;
     DB::update("update giohang set SoLuong = ?  where IDKhachHang = ? and STT = ? ",[$request->num,$id,$request->STT]);   
 });
+
+Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi']); 
+

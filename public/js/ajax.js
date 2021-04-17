@@ -58,7 +58,7 @@ function addCart(IDSanPham) {
 }
 
 function loadDeliveryAddress() {
-            var delivery = document.getElementsByClassName('row-address')[0];
+            var delivery = document.getElementsByClassName('row-address-customer')[0];
             delivery.style.display = 'block';
             document.getElementsByClassName('address')[0].style.display = 'none'
 

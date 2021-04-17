@@ -9,15 +9,19 @@
                     </div>
                 </div>
             </div>
+            @foreach($diaChi as $dc)
             <div class = "content-delivery-address" style = "display:flex;">
                         <div class = "input-radio" style = "line-height: 65px; padding-right: 10px;">
                             <input type = "radio" checked>
                         </div>
                         <div class  = "name-customer" style = "font-size:20px;">
-                           <p>Trà Thị Kim Hằng - <span>0987654321</span></p>
+                           <p>{{ $dc->HoTen}} - <span>{{ $dc->SDT }}</span></p>
                         </div>
+                       
                         <div class  ="address-customer" style = "width:50%;font-size:20px;">
-                            <p> 470 Trần Đại Nghĩa,Hòa Hải,Ngũ Hành Sơn,Đà Nẵng</p>
+                            <p> {{ $dc->SoNha}},{{ $dc->TenXa}},{{ $dc->TenQuan}},{{$dc->TenThanhPho}}</p>
                         </div>
+
              </div>
+             @endforeach
 

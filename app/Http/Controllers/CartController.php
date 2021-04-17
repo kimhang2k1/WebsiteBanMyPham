@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiaChi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -23,23 +24,23 @@ class CartController extends Controller
             ->where('IDKhachHang', '=', $id)
             ->where('giohang.STT','=', $value)
             ->get()[0];
-        Session::forget('product-pay');
+        // Session::forget('product-pay');
      
         }
-
-        
-        $quan = DB::table('quan/huyen')->where('IDThanhPho','=', NULL)->get();
-        $thanhPho = DB::table('tinh/thanhpho')->get();
+        $diaChi = DB::table('donhang')->leftJOIN('tinhthanhpho', 'donhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+        ->leftJOIN('quanhuyen', 'donhang.IDQuan','=','quanhuyen.IDQuan')
+        ->leftJOIN('xa', 'donhang.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
+        $quan = DB::table('quanhuyen')->where('IDThanhPho','=', NULL)->get();
+        $thanhPho = DB::table('tinhthanhpho')->get();
         $xa = DB::table('xa')->where('IDQuan','=',NULL)->get();
-
-        return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan);
+        return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)->with('diaChi', $diaChi);
        }
             
     }
 
     public function getQuanHuyen(Request $request) {
 
-            $huyen = DB::table('quan/huyen')->where('IDThanhPho', '=', $request->id)->get();
+            $huyen = DB::table('quanhuyen')->where('IDThanhPho', '=', $request->id)->get();
             $view = "";
         
             foreach ($huyen as $key => $value) {

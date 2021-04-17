@@ -12,6 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/ajax.js"></script>
     <script src="/js/modal.js"></script>
+    <script src = "/js/addAdress.js"></script>
 
     <title>Delta Comestic - Shop Mỹ Phẩm Hàn Quốc Tốt Uy Tín</title>
 </head>
@@ -35,8 +36,8 @@
                     </div>
                 </div>
             </div> 
-            <div class  = "row-address">
-                @include('component/delivery-address')
+            <div class  = "row-address-customer" id = "myAddress">
+                @include('component/delivery-address', ['diaChi' => $diaChi])
             </div>
             <div class = "information-product-order">
                 <div class  ="order">
@@ -118,7 +119,7 @@
             </div>
             <div class = "form-input-add-address">
                 <div class = "input-name">
-                    <input type = "text" name = "name" placeholder = "Họ Tên">
+                    <input type = "text" name = "HoTen" placeholder = "Họ Tên">
                 </div>
                 <div class = "input-phone">
                     <input type = "text" name = "phone" placeholder = "Số điện thoại">
@@ -128,7 +129,7 @@
                     <select onchange="loadThanhPho(this)"  id = "district-1" >
                         <option value = ""></option>
                     @foreach($thanhPho as $TP)
-                        <option   value = " {{ $TP->IDThanhPho }} ">{{ $TP->TenThanhPho}}</option>
+                        <option   value = " {{ $TP->IDThanhPho }} " >{{ $TP->TenThanhPho}}</option>
                     @endforeach
                     </select>
                 </div>
@@ -148,13 +149,16 @@
                          @endforeach
                     </select>
                 </div>
+                <div class = "input-apartment-number">
+                    <input type = "text" name = "SoNha" placeholder="Tòa Nhà/Tên đường...">
+                </div>
             </div>
             <div class = "btn" style = "display: flex; margin-top: 1rem; width: 50%;float: right;">
                 <div class = "btn-return">
                     <span onclick = "closeModal()" style="padding-right:1rem;cursor: pointer;">TRỞ LẠI </span>
                 </div>
                 <div class = "btn-complete">
-                    <a href = "">HOÀN THÀNH</a>
+                    <span onclick="add()">Hoàn Thành</span>
                 </div>
             </div>
         </div>
