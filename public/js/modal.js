@@ -7,4 +7,5 @@ function closeModal() {
   document.getElementById('district-1').value = "";
   document.getElementById('district-2').value = "";
   document.getElementById('district-3').value = "";
+  document.getElementsByClassName('print-error-msg')[0].innerText = "";
 }

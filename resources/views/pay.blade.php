@@ -114,54 +114,8 @@
      
      @include('layout/footer')
      <div class = "insert-address" id="myModal" >
-            <div class = "title-add-address">
-               <h2> Thêm 1 Địa Chỉ Mới </h2>
-            </div>
-            <div class = "form-input-add-address">
-                <div class = "input-name">
-                    <input type = "text" name = "HoTen" placeholder = "Họ Tên">
-                </div>
-                <div class = "input-phone">
-                    <input type = "text" name = "phone" placeholder = "Số điện thoại">
-                </div>
-                <div class = "input-district1">
-                  
-                    <select onchange="loadThanhPho(this)"  id = "district-1" >
-                        <option value = ""></option>
-                    @foreach($thanhPho as $TP)
-                        <option   value = " {{ $TP->IDThanhPho }} " >{{ $TP->TenThanhPho}}</option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class = "input-district2">
-                  <select id = "district-2" onchange="loadXa(this)">
-                        <option value = ""></option>
-                   @foreach($quan as $q)
-                        <option name = "district-2" value = "{{ $q->IDQuan }}">{{ $q->TenQuan}}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class = "input-district3">
-                    <select id = "district-3">
-                    <option value = ""></option>
-                        <@foreach($xa as $x)
-                        <option name = "district">{{ $x->TenXa}}</option>
-                         @endforeach
-                    </select>
-                </div>
-                <div class = "input-apartment-number">
-                    <input type = "text" name = "SoNha" placeholder="Tòa Nhà/Tên đường...">
-                </div>
-            </div>
-            <div class = "btn" style = "display: flex; margin-top: 1rem; width: 50%;float: right;">
-                <div class = "btn-return">
-                    <span onclick = "closeModal()" style="padding-right:1rem;cursor: pointer;">TRỞ LẠI </span>
-                </div>
-                <div class = "btn-complete">
-                    <span onclick="add()">Hoàn Thành</span>
-                </div>
-            </div>
-        </div>
+         @include('component/form-add-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa])
+    </div>
     </div>
    
 </body>

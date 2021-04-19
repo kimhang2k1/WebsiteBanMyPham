@@ -15,7 +15,7 @@
                             <input type = "radio" checked>
                         </div>
                         <div class  = "name-customer" style = "font-size:20px;">
-                           <p>{{ $dc->HoTen}} - <span>{{ $dc->SDT }}</span></p>
+                           <p>{{ $dc->HoTen}}<span>(+84{{ $dc->SDT }})</span></p>
                         </div>
                        
                         <div class  ="address-customer" style = "width:50%;font-size:20px;">

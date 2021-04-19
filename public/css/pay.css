@@ -92,7 +92,9 @@
     font-size:16px;
     color:grey;
 }
-
+.print-error-msg li {
+    line-height: 2rem;
+}
 .row-title-footer hr {
     width: 100px;
     height: 1px;
