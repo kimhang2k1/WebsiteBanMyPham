@@ -16,7 +16,6 @@ class XuLiAdressController extends Controller
          $validator = Validator::make($request->all(), [
             'HoTen' => array('required', 'regex:/^([a-zA-ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$/i'), 
             'phone' =>array('required','regex:((09|03|07|08|05)+([0-9]{8})\b)'),
-            'district-1' => array('required'),
             'SoNha' => array('required')
    
          ], $message = [
@@ -24,7 +23,6 @@ class XuLiAdressController extends Controller
             'HoTen.regex' => 'Họ tên không đúng định dạng',
             'phone.required' => 'Số điện thoại không được để trống',
             'phone.regex' => 'Số điện thoại không đúng định dạng',
-            'district-1.required' => 'Vui lòng chọn thành phố',
             'SoNha.required' => 'Số Nhà không được để trống'
 
          ]);
@@ -46,9 +44,13 @@ class XuLiAdressController extends Controller
         }
     }
 
-    public function getDiaChiKhachHang() {
-        $id = Session::get('user')[0]->IDKhachHang;
-        
-       
+    public function getDiaChiDefault(Request $request) {
+        $addressDefault = DB::table('donhang')->leftJOIN('tinhthanhpho', 'donhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+         ->leftJOIN('quanhuyen', 'donhang.IDQuan','=','quanhuyen.IDQuan')
+         ->leftJOIN('xa', 'donhang.IDXa','=','xa.IDXa')->where('IDDonHang', '=',$request->IDDonHang)->get();
+         Session::put('addressDefault', $addressDefault);
+       return view('component/addressCustomer')->with('addressDefault', $addressDefault);
+
+      
     }
 }

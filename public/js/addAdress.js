@@ -39,3 +39,31 @@ function printErrorMsg (msg) {
         $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
     });
 }
+
+function radioCheck() {
+    var parent = document.getElementsByClassName('input-radio')[0].childNodes;
+    for (let index = 0; index < parent.length; index++) {
+        if (index % 2 != 0) {
+            if (parent[index].childNodes[0].checked) {
+                return parent[index].childNodes[0];
+            }
+        }
+    }
+}
+function loadDiaChiAfterAdd(IDDonHang) {
+    $.ajax({
+        method:"GET",
+        url: "get-address",
+        data: {
+            IDDonHang : radioCheck().value
+
+        },
+        success:function(response) {
+            // $('#default-address').html(response);
+            document.getElementById('default-address').style.display = 'block'
+            document.getElementById('myAddress').style.display = 'none'
+
+        }
+        
+    })
+}

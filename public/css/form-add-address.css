@@ -21,14 +21,26 @@
     color: #fff;
     background-color: #ee4d2d;
 }
+.btn-complete button {
+    width: 140px;
+    height: 40px;
+    background-color: #ee4d2d;
+    border: 1px solid #ee4d2d;
+    color: #fff;
+    font-size: 15px;
+    font-family: sans-serif;
+}
 .btn-return a {
     text-decoration: none;
     padding-right: 1rem;
     color:black;
 }
+.btn-return {
+    line-height: 2.5rem;
+}
 .insert-address {
     width: 35%;
-    height: 25em;
+    height: 30em;
     margin: auto;
     border: 1px solid #ccc;
     padding: 15px;

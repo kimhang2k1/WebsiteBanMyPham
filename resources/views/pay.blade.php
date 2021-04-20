@@ -20,21 +20,8 @@
     @include('layout/header')
     <div id = "row-address">
         <div class = "payment">
-            <div class = "address">
-                <div class = "title-address" style = "color: #ee4d2d;font-size: 20px;">
-                    <i class="fas fa-map-marker-alt" style = "padding-right:1rem;"></i> <span> Địa Chỉ Nhận Hàng</span>
-                </div>
-                <div class = "content-delivery-address" style = "display:flex;">
-                    <div class  = "name-customer">
-                        <p>Trà Thị Kim Hằng - <span>0987654321</span></p>
-                    </div>
-                    <div class  ="address-customer" style = "width:50%;">
-                    <p> 470 Trần Đại Nghĩa,Hòa Hải,Ngũ Hành Sơn,Đà Nẵng</p>
-                    </div>
-                    <div class  = "change-address" style = "line-height:50px;">
-                        <span onclick="loadDeliveryAddress()"  style = "text-decoration: none;color: #05a;font-size: 17px;cursor: pointer;">THAY ĐỔI</span>
-                    </div>
-                </div>
+            <div class = "address" id = "default-address">
+                 @include('component/addressCustomer', ['addressDefault' => $addressDefault])
             </div> 
             <div class  = "row-address-customer" id = "myAddress">
                 @include('component/delivery-address', ['diaChi' => $diaChi])
@@ -57,7 +44,7 @@
                               <a href = "#" style="text-decoration: none;color: black;"> {{ $o->TenSanPham }}</a>
                             </div>
                             @if($o->IDMau != NULL)
-                            <div class = "product-type" style="margin-left:4rem;line-height: 5rem;color:grey;">
+                            <div class = "product-type" style="margin-left:0.5rem;line-height: 5rem;color:grey;">
                                 Loại: {{ $o->TenMau}} 
                             </div>
                             @else 

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
   
-    public function getProductInCart() {
+    public function getProductInCart(Request $request) {
         $id = Session::get('user')[0]->IDKhachHang;
         $product_pay = Session::get('product-pay');
        if (count($product_pay) > 0) {
@@ -30,10 +30,16 @@ class CartController extends Controller
         $diaChi = DB::table('donhang')->leftJOIN('tinhthanhpho', 'donhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
         ->leftJOIN('quanhuyen', 'donhang.IDQuan','=','quanhuyen.IDQuan')
         ->leftJOIN('xa', 'donhang.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
+
+        $addressDefault = DB::table('donhang')->leftJOIN('tinhthanhpho', 'donhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+         ->leftJOIN('quanhuyen', 'donhang.IDQuan','=','quanhuyen.IDQuan')
+         ->leftJOIN('xa', 'donhang.IDXa','=','xa.IDXa')->where('IDDonHang', '=',$request->IDDonHang)->get();
+        Session::put('addressDefault', $addressDefault);
         $quan = DB::table('quanhuyen')->where('IDThanhPho','=', NULL)->get();
         $thanhPho = DB::table('tinhthanhpho')->get();
         $xa = DB::table('xa')->where('IDQuan','=',NULL)->get();
-        return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)->with('diaChi', $diaChi);
+        return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
+        ->with('diaChi', $diaChi)->with('addressDefault', $addressDefault);
        }
             
     }

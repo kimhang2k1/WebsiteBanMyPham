@@ -18,7 +18,8 @@
 .name-customer {
     font-weight: bold;
     padding-right: 5px;
-    width: 25%;
+    width: 35%;
+    white-space:nowrap;
 }
 .add {
     line-height: 2em;

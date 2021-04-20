@@ -190,5 +190,4 @@ Route::get('sua-so-luong-san-pham', function(Request $request) {
 
 Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi']); 
 
-Route::get('my-form',[HomeController::class, 'myform']);
-Route::post('my-form',[HomeController::class, 'myformPost']);
+Route::get('get-address', [XuLiAdressController::class, 'getDiaChiDefault']);

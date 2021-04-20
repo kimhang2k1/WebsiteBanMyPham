@@ -11,15 +11,15 @@
             </div>
             @foreach($diaChi as $dc)
             <div class = "content-delivery-address" style = "display:flex;">
-                        <div class = "input-radio" style = "line-height: 65px; padding-right: 10px;">
-                            <input type = "radio" checked>
+                        <div class = "input-radio" style = "line-height: 60px; padding-right: 10px;">
+                            <p><input type = "radio" value = "{{ $dc->IDDonHang }}" onchange = "loadDiaChiAfterAdd()"></p>
                         </div>
-                        <div class  = "name-customer" style = "font-size:20px;">
-                           <p>{{ $dc->HoTen}}<span>(+84{{ $dc->SDT }})</span></p>
+                        <div class  = "name-customer" style = "font-size:18px;">
+                           <p>{{ $dc->HoTen}}<span>(+84)&nbsp;{{ $dc->SDT }}</span></p>
                         </div>
                        
-                        <div class  ="address-customer" style = "width:50%;font-size:20px;">
-                            <p> {{ $dc->SoNha}},{{ $dc->TenXa}},{{ $dc->TenQuan}},{{$dc->TenThanhPho}}</p>
+                        <div class  ="address-customer" style = "width:50%;font-size:18px;">
+                            <p> {{ $dc->SoNha}},&nbsp;{{ $dc->TenXa}},&nbsp;{{ $dc->TenQuan}},&nbsp;{{$dc->TenThanhPho}}</p>
                         </div>
 
              </div>
