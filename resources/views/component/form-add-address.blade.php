@@ -54,7 +54,7 @@
         <span onclick = "closeModal()" style="padding-right:1rem;cursor: pointer;">TRỞ LẠI </span>
     </div>
     <div class = "btn-complete">
-        <button type="button" onclick="add(event)">Hoàn Thành</button>
+        <button type="button" onclick='add(event)'>Hoàn Thành</button>
     </div>
 </div>
 </form>

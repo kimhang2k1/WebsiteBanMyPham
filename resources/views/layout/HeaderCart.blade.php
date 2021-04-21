@@ -13,7 +13,7 @@
                 @if(session()->has('user')) 
                     <ul style = "display:inline-flex;list-style:none;margin:0;">
                         <li><i class="fas fa-user-circle" style ="font-size:30px;"></i></li>
-                        <li style = "line-height:30px;padding-left:10px;font-size:17px;"><span> {{Session::get('user')[0]->TenKhachHang}}</span></li>
+                        <li style = "line-height:30px;padding-left:10px;font-size:17px;"><span> {{Session::get('user')[0]->TenDangNhap}}</span></li>
                    </ul>
                     <div class = "account-1" >
                        <a href = "dangxuat"><p>Đăng Xuất</p></a>

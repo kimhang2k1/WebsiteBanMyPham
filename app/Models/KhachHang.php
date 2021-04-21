@@ -10,17 +10,17 @@ class KhachHang extends Model
     use HasFactory;
     protected $table = 'khachhang';
     protected $fillable = [
-        'TenKhachHang',
+        'TenDangNhap',
         'Email',
         'MatKhau',
     ];
     public static function create(
-        $TenKH,
+        $TenDN,
         $Email,
         $MatKhau
     ) {
         $kh= new KhachHang();
-        $kh->TenKhachHang = $TenKH;
+        $kh->TenDangNhap = $TenDN;
         $kh->Email = $Email;
         $kh->MatKhau = $MatKhau;
         $kh->save();

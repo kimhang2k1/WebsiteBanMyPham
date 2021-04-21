@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\DiaChi;
+use App\Models\DonHang;
 use App\Models\Giohang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use SebastianBergmann\Type\NullType;
 
 class XuLiAdressController extends Controller
 {
@@ -32,25 +34,41 @@ class XuLiAdressController extends Controller
         else 
        
         {
+          
             $id = Session::get('user')[0]->IDKhachHang;
-        DiaChi::create($id, $request->HoTen,NULL, $request->IDXa, $request->IDQuan, $request->IDThanhPho,
-         $request->phone, $request->SoNha, NULL);
-        $diaChi = DB::table('donhang')->leftJOIN('tinhthanhpho', 'donhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-         ->leftJOIN('quanhuyen', 'donhang.IDQuan','=','quanhuyen.IDQuan')
-         ->leftJOIN('xa', 'donhang.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
-        return response()->json([
-        'view' => "" . view('component/delivery-address')->with('diaChi', $diaChi)]);
+            if($id == NULL) {
+                DonHang::create($id,NULL, NULL,NULL, NULL);
+            }
+           
+                DiaChi::create($request->HoTen, $request->phone, $request->IDThanhPho, $request->IDQuan, $request->IDXa, $request->SoNha, $id);
+            $diaChi = DB::table('diachi')->leftJOIN('tinhthanhpho', 'diachi.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+            ->leftJOIN('quanhuyen', 'diachi.IDQuan','=','quanhuyen.IDQuan')
+            ->leftJOIN('xa', 'diachi.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
+              
+            return response()->json([
+                'view' => "" . view('component/delivery-address')->with('diaChi', $diaChi)]);
+            }
+            
+           
+        
+    
+      
  
-        }
-    }
-
+        
+    
+}
     public function getDiaChiDefault(Request $request) {
-        $addressDefault = DB::table('donhang')->leftJOIN('tinhthanhpho', 'donhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-         ->leftJOIN('quanhuyen', 'donhang.IDQuan','=','quanhuyen.IDQuan')
-         ->leftJOIN('xa', 'donhang.IDXa','=','xa.IDXa')->where('IDDonHang', '=',$request->IDDonHang)->get();
-         Session::put('addressDefault', $addressDefault);
-       return view('component/addressCustomer')->with('addressDefault', $addressDefault);
+         $id = Session::get('user')[0]->IDKhachHang;
 
+            DB::update("update donhang set IDDiaChi = ?  where IDKhachHang = ? ",[$request->IDDiaChi,$id]); 
+            $donhang = DB::table('donhang')->JOIN('diachi', 'diachi.IDDiaChi','=', 'donhang.IDDiaChi')
+            ->leftJOIN('tinhthanhpho', 'diachi.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+            ->leftJOIN('quanhuyen', 'diachi.IDQuan','=','quanhuyen.IDQuan')
+            ->leftJOIN('xa', 'diachi.IDXa','=','xa.IDXa')
+            ->where('donhang.IDKhachHang', '=',$id)->get();
+            return view('component/addressCustomer')->with('donhang', $donhang);
+    
+       
       
     }
 }

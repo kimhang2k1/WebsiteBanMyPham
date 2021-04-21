@@ -32,7 +32,7 @@
                <form method = "POST" action = "xulidangki">
                {{ csrf_field() }}
                <div class = "form-input-login">
-                  <p>Họ Tên <span>*</span> </p>
+                  <p>Tên Đăng Nhập <span>*</span> </p>
                   <p><input type="text" name = "name_user" placeholder="Họ Tên" value = "@isset($register){{$register['name_user']}}@endisset"></p>
                   <p>Email <span>*</span> </p>
                   <p></p><input type="text" name = "email" placeholder="Email" value = "@isset($register){{$register['email']}}@endisset"></p>

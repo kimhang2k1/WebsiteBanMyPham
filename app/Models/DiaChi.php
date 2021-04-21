@@ -8,40 +8,34 @@ use Illuminate\Database\Eloquent\Model;
 class DiaChi extends Model
 {
     use HasFactory;
-    protected $table = "donhang";
+    protected $table = "diachi";
     protected $fillable = [
-        'IDKhachHang',
         'HoTen',
-        'NgayDatHang',
-        'IDXa',
-        'IDQuan',
-        'IDThanhPho',
         'SDT',
+        'IDThanhPho',
+        'IDQuan',
+        'IDXa',
         'SoNha',
-        'TrangThai'
+        'IDKhachHang'
     ];
     public static function create(
-        $IDKhachHang,
         $HoTen,
-        $NgayDatHang,
-        $IDXa,
-        $IDQuan,
-        $IDThanhPho,
         $SDT,
+        $IDThanhPho,
+        $IDQuan,
+        $IDXa,
         $SoNha,
-        $TrangThai
+        $IDKhachHang
     ) {
-        $address= new DiaChi();
-        $address->IDKhachHang = $IDKhachHang;
-        $address->HoTen = $HoTen;
-        $address->NgayDatHang = $NgayDatHang;
-        $address->IDXa = $IDXa;
-        $address->IDQuan = $IDQuan;
-        $address->IDThanhPho = $IDThanhPho;
-        $address->SDT = $SDT;
-        $address->SoNha = $SoNha;
-        $address->TrangThai = $TrangThai;
-        $address->save();
+        $dc= new DiaChi();
+        $dc->HoTen = $HoTen;
+        $dc->SDT = $SDT;
+        $dc->IDThanhPho = $IDThanhPho;
+        $dc->IDQuan = $IDQuan;
+        $dc->IDXa = $IDXa;
+        $dc->SoNha = $SoNha;
+        $dc->IDKhachHang = $IDKhachHang;
+        $dc->save();
     }
     public $timestamps = false;
 

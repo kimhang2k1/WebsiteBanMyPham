@@ -21,7 +21,7 @@
     <div id = "row-address">
         <div class = "payment">
             <div class = "address" id = "default-address">
-                 @include('component/addressCustomer', ['addressDefault' => $addressDefault])
+            @include('component/addressCustomer', ['donhang' => $donhang])
             </div> 
             <div class  = "row-address-customer" id = "myAddress">
                 @include('component/delivery-address', ['diaChi' => $diaChi])

@@ -1,4 +1,4 @@
-function add(event) {
+function add(event, IDDiaChi) {
         event.preventDefault();
         $.ajax({
             method : "GET",
@@ -10,12 +10,19 @@ function add(event) {
                 IDQuan : document.getElementById('district-2').value,
                 IDXa : document.getElementById('district-3').value,
                 SoNha : document.getElementsByName('SoNha')[0].value,
+                IDDiaChi : IDDiaChi
     
             },
             success:function(response) {
                 if($.isEmptyObject(response.error)){
                     document.getElementById('myModal').style.display = 'none'
                     $('#myAddress').html(response.view);
+                    if(response == '') {
+                        document.getElementById('myModal').style.display == 'block';
+                        
+
+                    }
+                    
                     if( document.getElementById('myModal').style.display == 'none') {
                         document.getElementsByName('HoTen')[0].value = "";
                         document.getElementsByName('phone')[0].value = "";
@@ -40,30 +47,58 @@ function printErrorMsg (msg) {
     });
 }
 
-function radioCheck() {
-    var parent = document.getElementsByClassName('input-radio')[0].childNodes;
-    for (let index = 0; index < parent.length; index++) {
-        if (index % 2 != 0) {
-            if (parent[index].childNodes[0].checked) {
-                return parent[index].childNodes[0];
-            }
+// function radioCheck() {
+//     var parent = document.getElementsByClassName('input-radio')[0].childNodes;
+//     for (let index = 0; index < parent.length; index++) {
+//         if (index % 2 != 0) {
+//             if (parent[index].childNodes[0].checked) {
+//                 return parent[index].childNodes[0];
+//             }
+//         }
+//     }
+// }
+
+function loadDiaChiAfterAdd() {
+    var address = document.getElementsByName('diachi');
+    for (var i = 0; i < address.length; i++) {
+        if (address[i].checked) {
+            var id = address[i].value;
         }
     }
+        $.ajax({
+            method:"GET",
+            url: "get-address",
+            data: {
+                IDDiaChi : id
+    
+            },
+            success:function(response) {
+                $('#default-address').html(response);
+                document.getElementById('default-address').style.display = 'block'
+                document.getElementById('myAddress').style.display = 'none'
+                
+    
+            }
+            
+        })
+    
+
 }
-function loadDiaChiAfterAdd(IDDonHang) {
-    $.ajax({
-        method:"GET",
-        url: "get-address",
-        data: {
-            IDDonHang : radioCheck().value
+// function loadDiaChiAfterAdd(IDDonHang) {
+//     $.ajax({
+//         method:"GET",
+//         url: "get-address",
+//         data: {
+//             IDDiaChi : radioCheck().value
 
-        },
-        success:function(response) {
-            // $('#default-address').html(response);
-            document.getElementById('default-address').style.display = 'block'
-            document.getElementById('myAddress').style.display = 'none'
+//         },
+//         success:function(response) {
+//             // $('#default-address').html(response);
+//             document.getElementById('default-address').style.display = 'block'
+//             document.getElementById('myAddress').style.display = 'none'
+            
 
-        }
+//         }
         
-    })
-}
+//     })
+// }
