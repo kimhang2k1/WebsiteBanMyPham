@@ -45,7 +45,7 @@
     border: 1px solid #ccc;
     padding: 15px;
     text-align: center;
-    display:none;
+    display:block;
     position: fixed;
     overflow: auto;
     top: 50%;

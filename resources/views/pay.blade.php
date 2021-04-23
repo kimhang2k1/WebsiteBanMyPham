@@ -20,12 +20,36 @@
     @include('layout/header')
     <div id = "row-address">
         <div class = "payment">
-            <div class = "address" id = "default-address">
-            @include('component/addressCustomer', ['donhang' => $donhang])
-            </div> 
-            <div class  = "row-address-customer" id = "myAddress">
-                @include('component/delivery-address', ['diaChi' => $diaChi])
-            </div>
+            @if(count($diaChi) < 0) 
+               <div class = "insert-address" id="myModal" style="display:block;" >
+                     @include('component/form-add-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa])
+              </div>
+                <!-- <div class  = "row-address-customer" id = "myAddress" style = "display:none;">
+                    @include('component/delivery-address', ['diaChi' => $diaChi])
+                </div> -->
+                <!-- <div class = "address" id = "default-address"style = "display:block;" >
+                      @include('component/addressCustomer', ['donhang' => $donhang])
+                    </div> -->
+            @else 
+                @if(count($donhang) > 0)
+                    <div class = "address" id = "default-address"style = "display:block;" >
+                      @include('component/addressCustomer', ['donhang' => $donhang])
+                    </div> 
+                    <div class  = "row-address-customer" id = "myAddress" style = "display:none;">
+                        @include('component/delivery-address', ['diaChi' => $diaChi])
+                    </div>
+                    <div class = "insert-address" id="myModal" style="display:none;" >
+                     @include('component/form-add-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa])
+                   </div>
+                @else 
+                    <div class = "address" id = "default-address"style = "display:none;" >
+                    @include('component/addressCustomer', ['donhang' => $donhang])
+                    </div> 
+                    <div class  = "row-address-customer" id = "myAddress" style = "display:block;">
+                        @include('component/delivery-address', ['diaChi' => $diaChi])
+                    </div>
+                @endif
+            @endif
             <div class = "information-product-order">
                 <div class  ="order">
                     <div class = "row-title-infor-product" style = "display:flex;padding:15px;font-size:18px;color:#bbb;">
@@ -100,9 +124,15 @@
      </div>
      
      @include('layout/footer')
-     <div class = "insert-address" id="myModal" >
-         @include('component/form-add-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa])
-    </div>
+        @if(count($diaChi) > 0) 
+        <div class = "insert-address" id="myModal" style="display: none;"  >
+            @include('component/form-add-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa])
+        </div>
+        @else 
+        <div class = "insert-address" id="myModal" style="display: block;"  >
+            @include('component/form-add-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa])
+        </div>
+        @endif
     </div>
    
 </body>

@@ -17,11 +17,6 @@ function add(event, IDDiaChi) {
                 if($.isEmptyObject(response.error)){
                     document.getElementById('myModal').style.display = 'none'
                     $('#myAddress').html(response.view);
-                    if(response == '') {
-                        document.getElementById('myModal').style.display == 'block';
-                        
-
-                    }
                     
                     if( document.getElementById('myModal').style.display == 'none') {
                         document.getElementsByName('HoTen')[0].value = "";

@@ -191,3 +191,11 @@ Route::get('sua-so-luong-san-pham', function(Request $request) {
 Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi']); 
 
 Route::get('get-address', [XuLiAdressController::class, 'getDiaChiDefault']);
+
+Route::get('/profile', function() {
+    return view('profile-customer');
+});
+
+Route::get('/edit-profile', function() {
+    return view('/component/edit-profile');
+});
