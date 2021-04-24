@@ -108,7 +108,8 @@ function toggle(source) {
   function onchangetoggle(element) {
     var sum = new Number(document.getElementById('mainPrice').innerHTML.replaceAll(',',''));
     var num = new Number(document.getElementById('numberSelected').innerHTML);
-    if (element.checked)
+    element.data = true;
+    if (element.checked && element.data === true)
     {  
         element.unchecked
         num++;

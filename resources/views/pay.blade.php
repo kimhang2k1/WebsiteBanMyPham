@@ -58,6 +58,11 @@
                         <div class = "amount-product-order" style = "width:15%;">Số Lượng</div>
                         <div class = "total-product" style= "width:15%;">Thành Tiền</div>
                     </div>
+                    <form method = "GET" action = "xu-li-don-dat-hang">
+                        <?php
+                        $sum = 0;
+                        ?>
+                    @if (count($order) > 0)
                     @foreach($order as $o) 
                     <div class = "the-items-order" style= "display:flex;padding:15px;font-size:17px;">
                         <div class  = "items-order" style= "display:flex;width:55%;">
@@ -84,7 +89,6 @@
                     </div>
                     @endforeach
                     <?php 
-                       $sum = 0;
                        foreach ($order as $key => $value) {
                          $thanhTien = $order[$key]->GiaSP * $order[$key]->SoLuong;
                           $sum += $thanhTien;
@@ -92,6 +96,7 @@
                        
                     
                     ?>
+                    @endif
                 </div>
             </div>  
             <div class  = "total-buy-product">  
@@ -119,7 +124,8 @@
             <div class = "btn-order-product" style= "display: flex;  padding: 15px;border: 1px solid #f1f0ed;border-top: none; background-color: #fffefb;">
                    <p style = "padding-right: 22rem; font-size: 18px;">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo Điều Khoản của Shop</p>
                    <button type = "submit">Đặt Hàng </button>
-                </div>
+             </div>
+                </form>
         </div>
      </div>
      

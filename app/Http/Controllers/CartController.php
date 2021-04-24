@@ -15,20 +15,9 @@ class CartController extends Controller
 {
   
     public function getProductInCart(Request $request) {
-        $id = Session::get('user')[0]->IDKhachHang;
-            $product_pay = Session::get('product-pay');
-            if (count($product_pay) > 0) {
-             $newArray = array();
-             foreach ($product_pay as $key => $value) {
-                 $newArray[$key] = DB::table('giohang')->leftJoin('mausanpham', 'mausanpham.IDMau', 'giohang.IDMau')
-                 ->JOIN('sanpham', 'giohang.IDSanPham', 'sanpham.IDSanPham')
-                 ->where('IDKhachHang', '=', $id)
-                 ->where('giohang.STT','=', $value)
-                 ->get()[0];
-             // Session::forget('product-pay');
-          
-             }
-             $diaChi = DB::table('diachi')->leftJOIN('tinhthanhpho', 'diachi.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+            $id = Session::get('user')[0]->IDKhachHang;
+            $product_pay = session()->has('product-pay') ? Session::get('product-pay') : array();
+            $diaChi = DB::table('diachi')->leftJOIN('tinhthanhpho', 'diachi.IDThanhPho','=','tinhthanhpho.IDThanhPho')
              ->leftJOIN('quanhuyen', 'diachi.IDQuan','=','quanhuyen.IDQuan')
              ->leftJOIN('xa', 'diachi.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
     
@@ -41,14 +30,23 @@ class CartController extends Controller
              ->leftJOIN('xa', 'diachi.IDXa','=','xa.IDXa')
              ->where('donhang.IDKhachHang', '=',$id)->get();
              $dc = DB::table('donhang')->where('IDKhachHang', '=', $id);
-                return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
+            if (count($product_pay) > 0) {
+             $newArray = array();
+             foreach ($product_pay as $key => $value) {
+                 $newArray[$key] = DB::table('giohang')->leftJoin('mausanpham', 'mausanpham.IDMau', 'giohang.IDMau')
+                 ->JOIN('sanpham', 'giohang.IDSanPham', 'sanpham.IDSanPham')
+                 ->where('IDKhachHang', '=', $id)
+                 ->where('giohang.STT','=', $value)
+                 ->get()[0];
+             }
+             Session::put('donhang', $donhang);
+             return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
+             ->with('diaChi', $diaChi)->with('donhang', $donhang)->with('dc', $dc); 
+            } 
+            else {
+                return view('pay')->with('order', array())->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
                 ->with('diaChi', $diaChi)->with('donhang', $donhang)->with('dc', $dc);
-             
             }
-        
-        
-       
-            
     }
 
     public function getQuanHuyen(Request $request) {

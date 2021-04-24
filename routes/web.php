@@ -70,6 +70,7 @@ Route::get('sanphamsapxep', [productController::class, 'sapXepGia']);
 Route::get('sanphamtheothuonghieu', [productController::class, 'getSanPhambyThuongHieu']);
 
 Route::get('gio-hang', function(Request $request) {
+
     $id = Session::get('user')[0]->IDKhachHang;
     $cart = DB::table('giohang')->JOIN('sanpham', 'giohang.IDSanPham', '=', 'sanpham.IDSanPham')
     ->leftJoin('mausanpham', 'mausanpham.IDMau', '=', 'giohang.IDMau')->where('IDKhachHang', '=', Session::get('user')[0]->IDKhachHang)->get();
@@ -159,12 +160,12 @@ Route::get('/load-xa', [CartController::class, 'getXa']);
 Route::get("them-san-pham-thanh-toan",function(Request $request){
     if (session()->has('product-pay')) {
         $product_pay = Session::get('product-pay');
-        $product_pay[count($product_pay)] = $request->id;
+        $product_pay[$request->id] = $request->id;
         Session::put('product-pay',$product_pay);
     }
     else {
         $product_pay = array();
-        $product_pay[0] = $request->id;
+        $product_pay[$request->id] = $request->id;
         Session::put('product-pay',$product_pay);
     }
 });
@@ -175,7 +176,6 @@ Route::get("xoa-san-pham-thanh-toan",function(Request $request){
             if ($value == $request->id) 
                 unset($product_pay[$key]);
         }
-        $product_pay = array_values($product_pay);
         if (count($product_pay) > 0) 
         Session::put('product-pay',$product_pay);
         else 
@@ -199,3 +199,5 @@ Route::get('/profile', function() {
 Route::get('/edit-profile', function() {
     return view('/component/edit-profile');
 });
+
+Route::get('xu-li-don-dat-hang', [OrderController::class, 'addOrder']);
