@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChiTietDonHang;
+use App\Models\DonHang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -10,8 +11,11 @@ use Illuminate\Support\Facades\Session;
 class OrderController extends Controller
 {
     public function addOrder() {
-        $idDonHang = Session::get('donhang')[0]->IDDonHang;
+       
         $id = Session::get('user')[0]->IDKhachHang;
+        $currentDateTime = date('Y-m-d H:i:s');
+        $IDDiaChiGiaoHang = Session::get('diaChiGiaoHang')[0]->ID;
+        DonHang::create($id,$currentDateTime, NULL, $IDDiaChiGiaoHang, NULL);
         $product_pay = session()->has('product-pay') ? Session::get('product-pay') : array();
         if (count($product_pay) > 0) {
             $newArray = array();
@@ -21,14 +25,13 @@ class OrderController extends Controller
             ->where('IDKhachHang', '=', $id)
             ->where('giohang.STT','=', $value)
             ->get()[0];
-            
-            ChiTietDonHang::create($idDonHang,$newArray[$key]->IDSanPham, $newArray[$key]->IDMau, $newArray[$key]->SoLuong,
+            $dh = DB::select('SELECT IDDonHang FROM donhang  WHERE IDKhachHang  ORDER BY IDDonHang DESC');
+            ChiTietDonHang::create($dh[0]->IDDonHang,$newArray[$key]->IDSanPham, $newArray[$key]->IDMau, $newArray[$key]->SoLuong,
                 $newArray[$key]->GiaSP, $newArray[$key]->GiaSP * $newArray[$key]->SoLuong);
-                
             }
+          
         }
-        else {
-
-        }
+      
+       
     }
 }

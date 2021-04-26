@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DiaChi;
+
+use App\Models\DiaChiGiaoHang;
 use App\Models\DonHang;
 use App\Models\Giohang;
+use App\Models\ThongTinKhachHang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use SebastianBergmann\Type\NullType;
+
 
 class XuLiAdressController extends Controller
 {
@@ -36,14 +38,10 @@ class XuLiAdressController extends Controller
         {
           
             $id = Session::get('user')[0]->IDKhachHang;
-            if($id == NULL) {
-                DonHang::create($id,NULL, NULL,NULL, NULL);
-            }
-           
-                DiaChi::create($request->HoTen, $request->phone, $request->IDThanhPho, $request->IDQuan, $request->IDXa, $request->SoNha, $id);
-            $diaChi = DB::table('diachi')->leftJOIN('tinhthanhpho', 'diachi.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-            ->leftJOIN('quanhuyen', 'diachi.IDQuan','=','quanhuyen.IDQuan')
-            ->leftJOIN('xa', 'diachi.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
+               ThongTinKhachHang::create($request->HoTen, $request->phone, $request->IDThanhPho, $request->IDQuan, $request->IDXa, $request->SoNha, $id);
+                $diaChi = DB::table('thongtinkhachhang')->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+                ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
+                ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
               
             return response()->json([
                 'view' => "" . view('component/delivery-address')->with('diaChi', $diaChi)]);
@@ -59,14 +57,32 @@ class XuLiAdressController extends Controller
 }
     public function getDiaChiDefault(Request $request) {
          $id = Session::get('user')[0]->IDKhachHang;
+         $dcGiaoHang = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
+        if(count($dcGiaoHang) > 0)  
+        {
+            DB::update("update diachigiaohang set ID = ?  where IDKhachHang = ? ",[$request->ID,$id]); 
+            $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
+            ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+            ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
+            ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')
+            ->where('diachigiaohang.IDKhachHang', '=',$id)->get();  
+        
+           return view('component/addressCustomer')->with('diaChiGiaoHang', $diaChiGiaoHang);
+        }
+        else {
+            DiaChiGiaoHang::create($request->ID, $id, NULL); 
 
-            DB::update("update donhang set IDDiaChi = ?  where IDKhachHang = ? ",[$request->IDDiaChi,$id]); 
-            $donhang = DB::table('donhang')->JOIN('diachi', 'diachi.IDDiaChi','=', 'donhang.IDDiaChi')
-            ->leftJOIN('tinhthanhpho', 'diachi.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-            ->leftJOIN('quanhuyen', 'diachi.IDQuan','=','quanhuyen.IDQuan')
-            ->leftJOIN('xa', 'diachi.IDXa','=','xa.IDXa')
-            ->where('donhang.IDKhachHang', '=',$id)->get();
-            return view('component/addressCustomer')->with('donhang', $donhang);
+            $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
+            ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+            ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
+            ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')
+            ->where('diachigiaohang.IDKhachHang', '=',$id)->get();  
+        
+        return view('component/addressCustomer')->with('diaChiGiaoHang', $diaChiGiaoHang);
+        }
+          
+        
+               
     
        
       

@@ -5,14 +5,10 @@ function previousImage() {
 function nextImage() {
     document.getElementById('image-decription-productss').scrollLeft += 86;
 }
-
-
-
 function onHover(a) {
     var anh = a.src;
     document.getElementById('images').src = anh;
 }
- 
 function changeColor(IDMau) {
     document.getElementById('images').src = document.getElementById(IDMau).src;
     document.getElementById('idColor').value = IDMau;
@@ -104,58 +100,58 @@ function toggle(source) {
     
     numberSelected.innerHTML = source.checked ? checkboxes.length : 0;
     totalProduct.innerHTML = source.checked ? checkboxes.length : 0;
-  }
-  function onchangetoggle(element) {
-    var sum = new Number(document.getElementById('mainPrice').innerHTML.replaceAll(',',''));
-    var num = new Number(document.getElementById('numberSelected').innerHTML);
-    element.data = true;
-    if (element.checked && element.data === true)
-    {  
-        element.unchecked
-        num++;
+}
+function onchangetoggle(element) {
+var sum = new Number(document.getElementById('mainPrice').innerHTML.replaceAll(',',''));
+var num = new Number(document.getElementById('numberSelected').innerHTML);
+element.data = true;
+if (element.checked && element.data === true)
+{  
+    element.unchecked
+    num++;
+    var id = element.parentElement.parentElement.id;
+    var price = new Number(document.getElementById(id +'total-money').innerHTML.replaceAll(',',''));
+    sum += price;
+    document.getElementById('numberSelected').innerHTML = num;
+    document.getElementById('totalProduct').innerHTML = num;
+    document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    $.ajax({
+        method: "GET",
+        url : "them-san-pham-thanh-toan",
+        data : {
+            id : id
+        },
+        success : function(response) {
+            
+        }
+    })
+}
+else {
+    element.checked 
+    if(num <= 0) {
+        document.getElementById('numberSelected').innerHTML = 0;
+        document.getElementById('mainPrice').innerHTML = 0;
+    }
+    else {
+        num--;
         var id = element.parentElement.parentElement.id;
         var price = new Number(document.getElementById(id +'total-money').innerHTML.replaceAll(',',''));
-        sum += price;
+        sum -= price;
         document.getElementById('numberSelected').innerHTML = num;
         document.getElementById('totalProduct').innerHTML = num;
         document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         $.ajax({
             method: "GET",
-            url : "them-san-pham-thanh-toan",
+            url : "xoa-san-pham-thanh-toan",
             data : {
-                id : id
+                id : id,
             },
             success : function() {
                 
             }
         })
     }
-    else {
-        element.checked 
-        if(num <= 0) {
-            document.getElementById('numberSelected').innerHTML = 0;
-            document.getElementById('mainPrice').innerHTML = 0;
-        }
-        else {
-            num--;
-            var id = element.parentElement.parentElement.id;
-            var price = new Number(document.getElementById(id +'total-money').innerHTML.replaceAll(',',''));
-            sum -= price;
-            document.getElementById('numberSelected').innerHTML = num;
-            document.getElementById('totalProduct').innerHTML = num;
-            document.getElementById('mainPrice').innerHTML = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-            $.ajax({
-                method: "GET",
-                url : "xoa-san-pham-thanh-toan",
-                data : {
-                    id : id,
-                },
-                success : function() {
-                    
-                }
-            })
-        }
-      
-    }
-  }
+    
+}
+}
  

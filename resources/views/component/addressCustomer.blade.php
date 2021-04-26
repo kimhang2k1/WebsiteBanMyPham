@@ -2,7 +2,7 @@
                 <i class="fas fa-map-marker-alt" style = "padding-right:1rem;"></i> <span> Địa Chỉ Nhận Hàng</span>
             </div>
 
-            @foreach($donhang as $dh)
+            @foreach($diaChiGiaoHang as $dh)
             <div class = "content-delivery-address" style = "display:flex;">
                 <div class  = "name-customer">
                     <p>{{ $dh->HoTen}} <span>(+84)&nbsp;&nbsp;{{ $dh->SDT }}</span></p>

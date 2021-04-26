@@ -10,7 +10,6 @@ function add(event, IDDiaChi) {
                 IDQuan : document.getElementById('district-2').value,
                 IDXa : document.getElementById('district-3').value,
                 SoNha : document.getElementsByName('SoNha')[0].value,
-                IDDiaChi : IDDiaChi
     
             },
             success:function(response) {
@@ -64,7 +63,7 @@ function loadDiaChiAfterAdd() {
             method:"GET",
             url: "get-address",
             data: {
-                IDDiaChi : id
+                ID : id
     
             },
             success:function(response) {

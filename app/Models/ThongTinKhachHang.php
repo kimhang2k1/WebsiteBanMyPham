@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DiaChi extends Model
+class ThongTinKhachHang extends Model
 {
     use HasFactory;
-    protected $table = "diachi";
+    protected $table = "thongtinkhachhang";
     protected $fillable = [
         'HoTen',
         'SDT',
@@ -27,7 +27,7 @@ class DiaChi extends Model
         $SoNha,
         $IDKhachHang
     ) {
-        $dc= new DiaChi();
+        $dc= new ThongTinKhachHang();
         $dc->HoTen = $HoTen;
         $dc->SDT = $SDT;
         $dc->IDThanhPho = $IDThanhPho;

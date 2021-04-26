@@ -31,9 +31,9 @@
                       @include('component/addressCustomer', ['donhang' => $donhang])
                     </div> -->
             @else 
-                @if(count($donhang) > 0)
+                @if(count($diaChiGiaoHang) > 0)
                     <div class = "address" id = "default-address"style = "display:block;" >
-                      @include('component/addressCustomer', ['donhang' => $donhang])
+                      @include('component/addressCustomer', ['diaChiGiaoHang' => $diaChiGiaoHang])
                     </div> 
                     <div class  = "row-address-customer" id = "myAddress" style = "display:none;">
                         @include('component/delivery-address', ['diaChi' => $diaChi])
@@ -43,7 +43,7 @@
                    </div>
                 @else 
                     <div class = "address" id = "default-address"style = "display:none;" >
-                    @include('component/addressCustomer', ['donhang' => $donhang])
+                    @include('component/addressCustomer', ['diaChiGiaoHang' => $diaChiGiaoHang])
                     </div> 
                     <div class  = "row-address-customer" id = "myAddress" style = "display:block;">
                         @include('component/delivery-address', ['diaChi' => $diaChi])

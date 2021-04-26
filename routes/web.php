@@ -168,6 +168,7 @@ Route::get("them-san-pham-thanh-toan",function(Request $request){
         $product_pay[$request->id] = $request->id;
         Session::put('product-pay',$product_pay);
     }
+    return json_encode(Session::get('product-pay'));
 });
 Route::get("xoa-san-pham-thanh-toan",function(Request $request){
     if (session()->has('product-pay')) {

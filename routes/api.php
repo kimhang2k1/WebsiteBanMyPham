@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('demo',function() {
+    DB::select('SELECT IDKhachHang FROM khachhang Ỏ');
+    $string = "KH1001";
+    $data = explode('KH',$string);
+    $number = $data[1];
+    $number++;
+    return "KH".$number;
 });
