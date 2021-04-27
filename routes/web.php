@@ -27,7 +27,7 @@ use App\Models\DiaChi;
 */
 
 Route::get('/trangchu',function() {
-    $product = DB::table('sanpham')->get();
+    $product = DB::table('sanpham')->orderBy('IDSanPham', 'DESC')->get();
     return view('index')->with('product',$product);
 });
 
@@ -158,10 +158,12 @@ Route::get('/load-thanh-pho', [CartController::class, 'getQuanHuyen'] );
 Route::get('/load-xa', [CartController::class, 'getXa']);
 
 Route::get("them-san-pham-thanh-toan",function(Request $request){
+    Session::forget('product-pay');
     if (session()->has('product-pay')) {
         $product_pay = Session::get('product-pay');
         $product_pay[$request->id] = $request->id;
         Session::put('product-pay',$product_pay);
+
     }
     else {
         $product_pay = array();
@@ -178,7 +180,7 @@ Route::get("xoa-san-pham-thanh-toan",function(Request $request){
                 unset($product_pay[$key]);
         }
         if (count($product_pay) > 0) 
-        Session::put('product-pay',$product_pay);
+        Session::forget('product-pay');
         else 
         Session::forget('product-pay');
     }

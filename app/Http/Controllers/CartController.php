@@ -16,10 +16,8 @@ class CartController extends Controller
 {
   
     public function getProductInCart(Request $request) {
-       
         $id = Session::get('user')[0]->IDKhachHang;
-        $product_pay = session()->has('product-pay') ? Session::get('product-pay') : array();
-        Session::forget('product-pay');
+        $product_pay = session()->has('product-pay') ? Session::get('product-pay') : array();   
         if (count($product_pay) > 0) {
             $newArray = array();
             foreach ($product_pay as $key => $value) {
@@ -34,7 +32,7 @@ class CartController extends Controller
             $diaChi = DB::table('thongtinkhachhang')->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
              ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
              ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->where('IDKhachHang', '=',$id)->get();
-    
+     
              $quan = DB::table('quanhuyen')->where('IDThanhPho','=', NULL)->get();
 
              $thanhPho = DB::table('tinhthanhpho')->get();
@@ -46,11 +44,14 @@ class CartController extends Controller
              ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
              ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')
              ->where('diachigiaohang.IDKhachHang', '=',$id)->get();
+
+            
              Session::put('diaChiGiaoHang', $diaChiGiaoHang);
              
-            
+             $dh = DB::table('donhang')->select(DB::raw('IDDonHang'))->where('IDKhachHang', '=', $id)->orderBy('IDDonHang', 'DESC')->limit(1)->get();
+             Session::put('dh', $dh);
              return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
-             ->with('diaChi', $diaChi)->with('diaChiGiaoHang', $diaChiGiaoHang);
+             ->with('diaChi', $diaChi)->with('diaChiGiaoHang', $diaChiGiaoHang)->with('dh', $dh);
         }
            
     }
