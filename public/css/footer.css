@@ -1,0 +1,38 @@
+.row-title-footer hr {
+    width: 100px;
+    height: 1px;
+    margin: 0;
+    border: 1px solid #44cdc7;
+    background-color: #44cdc7;
+}
+.row-title-footer p {
+    font-size:17px;
+    font-weight: 700;
+
+}
+.site-footer {
+    width: 80%;
+    margin:auto;
+    display: flex;
+    margin-top:2em;
+}
+.row-footer-1 {
+    width: 25%;
+}
+.row-icon-footer {
+    margin-top:3px;
+    margin-right: 1em;
+}
+.row-icon-footer i {
+    padding-bottom: 6px;
+    color:#44cdc7;
+}
+.row-content-footer {
+    display:flex;
+}
+
+.row-content-infor p {
+    font-family: "Noto Serif",serif;
+    font-size: 18px;
+    color: #292929;
+}

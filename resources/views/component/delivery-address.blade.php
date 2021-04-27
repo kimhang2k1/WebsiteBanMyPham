@@ -10,7 +10,7 @@
                 </div>
             </div>
             @foreach($diaChi as $dc)
-            <div class = "content-delivery-address" style = "display:flex;height:40px;">
+            <div class = "content-delivery-address" style = "display:flex;height:45px;">
                         <div class = "input-radio" style = "line-height: 28px; padding-right: 10px;">
                             <p><input type = "radio" name = "diachi" value = "{{ $dc->ID }}" onclick = "loadDiaChiAfterAdd()"></p>
                         </div>
@@ -18,7 +18,7 @@
                            {{ $dc->HoTen}}<span>(+84)&nbsp;{{ $dc->SDT }}</span>
                         </div>
                        
-                        <div class  ="address-customer" style = "width:50%;font-size:18px;line-height:4rem;">
+                        <div class  ="address-customer" style = "width:50%;font-size:18px;line-height:4rem;white-space:nowrap;">
                           {{ $dc->SoNha}},&nbsp;{{ $dc->TenXa}},&nbsp;{{ $dc->TenQuan}},&nbsp;{{$dc->TenThanhPho}}
                         </div>
 

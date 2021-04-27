@@ -11,26 +11,34 @@ use Illuminate\Support\Facades\Session;
 class OrderController extends Controller
 {
     public function addOrder() {
-       
-        $id = Session::get('user')[0]->IDKhachHang;
-        $idDonHang = Session::get('dh')[0]->IDDonHang;
-        $currentDateTime = date('Y-m-d H:i:s');
-        $IDDiaChiGiaoHang = Session::get('diaChiGiaoHang')[0]->ID;
-        DonHang::create($id,$currentDateTime, NULL, $IDDiaChiGiaoHang, NULL);
-        $product_pay = Session::get('product-pay');
-        if (count($product_pay) > 0) {
-            foreach ($product_pay as $key => $value) {
-            $newArray[$key] = DB::table('giohang')->leftJoin('mausanpham', 'mausanpham.IDMau', 'giohang.IDMau')
-            ->JOIN('sanpham', 'giohang.IDSanPham', 'sanpham.IDSanPham')
-            ->where('IDKhachHang', '=', $id)
-            ->where('giohang.STT','=', $value)
-            ->get()[0];
-            ChiTietDonHang::create($idDonHang,$newArray[$key]->IDSanPham, $newArray[$key]->IDMau, $newArray[$key]->SoLuong,
-                $newArray[$key]->GiaSP, $newArray[$key]->GiaSP * $newArray[$key]->SoLuong);
+            $id = Session::get('user')[0]->IDKhachHang;
+            $currentDateTime = date('Y-m-d H:i:s');
+            $IDDiaChiGiaoHang = Session::get('diaChiGiaoHang')[0]->ID;
+            $string = "DELTA1000000";
+            $data = explode('DELTA',$string);
+            $number = $data[1];
+            $number++;
+            DonHang::create('DELTA'.$number,$id,$currentDateTime, NULL, $IDDiaChiGiaoHang, NULL);
+            $product_order = Session::get('order-product');
+            if (count($product_order) > 0) {
+                foreach ($product_order as $key => $value) {
+                $newArray[$key] = DB::table('giohang')->leftJoin('mausanpham', 'mausanpham.IDMau', 'giohang.IDMau')
+                ->JOIN('sanpham', 'giohang.IDSanPham', 'sanpham.IDSanPham')
+                ->where('IDKhachHang', '=', $id)
+                ->where('giohang.STT','=', $value)
+                ->get()[0];
+                $dh = DB::table('donhang')->select(DB::raw('IDDonHang'))->where('IDKhachHang', '=', $id)->orderBy('IDDonHang', 'DESC')->limit(1)->get();
+                    ChiTietDonHang::create($dh[0]->IDDonHang,$newArray[$key]->IDSanPham, $newArray[$key]->IDMau, $newArray[$key]->SoLuong,
+                    $newArray[$key]->GiaSP, $newArray[$key]->GiaSP * $newArray[$key]->SoLuong);
+                
+                    DB::table('giohang')
+                    ->where('IDKhachHang', '=', $id)
+                    ->where('giohang.STT','=', $value)
+                    ->delete();
+                }
+            
             }
-          
         }
-      
        
     }
-}
+

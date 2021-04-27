@@ -126,12 +126,3 @@ function loadXa(Element) {
     })
 }
 
-function order() {
-    $.ajax({
-        method : "GET", 
-        url : "dat-hang",
-        data : {
-            
-        }
-    })
-}

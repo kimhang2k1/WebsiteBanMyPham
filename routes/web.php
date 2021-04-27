@@ -14,6 +14,7 @@ use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\DiaChi;
+use App\Models\ThongTinKhachHang;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +71,7 @@ Route::get('sanphamsapxep', [productController::class, 'sapXepGia']);
 Route::get('sanphamtheothuonghieu', [productController::class, 'getSanPhambyThuongHieu']);
 
 Route::get('gio-hang', function(Request $request) {
-
+   
     $id = Session::get('user')[0]->IDKhachHang;
     $cart = DB::table('giohang')->JOIN('sanpham', 'giohang.IDSanPham', '=', 'sanpham.IDSanPham')
     ->leftJoin('mausanpham', 'mausanpham.IDMau', '=', 'giohang.IDMau')->where('IDKhachHang', '=', Session::get('user')[0]->IDKhachHang)->get();
@@ -158,29 +159,41 @@ Route::get('/load-thanh-pho', [CartController::class, 'getQuanHuyen'] );
 Route::get('/load-xa', [CartController::class, 'getXa']);
 
 Route::get("them-san-pham-thanh-toan",function(Request $request){
-    Session::forget('product-pay');
-    if (session()->has('product-pay')) {
+     
+    if (session()->has('product-pay') && session()->has('order-product')){
         $product_pay = Session::get('product-pay');
+        $product_order = Session::get('order-product');
         $product_pay[$request->id] = $request->id;
+        $product_order[$request->id] = $request->id;
         Session::put('product-pay',$product_pay);
-
+        Session::put('order-product',$product_order);
     }
     else {
         $product_pay = array();
         $product_pay[$request->id] = $request->id;
         Session::put('product-pay',$product_pay);
+        $product_order = array();
+        $product_order[$request->id] = $request->id;
+        Session::put('order-product',$product_order);
     }
     return json_encode(Session::get('product-pay'));
 });
 Route::get("xoa-san-pham-thanh-toan",function(Request $request){
-    if (session()->has('product-pay')) {
+
+    if (session()->has('product-pay') && session()->has('order-product')) {
         $product_pay = Session::get('product-pay');
+        $product_order = Session::get('order-product');
         foreach ($product_pay as $key => $value) {
             if ($value == $request->id) 
                 unset($product_pay[$key]);
+        } 
+        foreach ($product_order as $key => $value) {
+            if ($value == $request->id) 
+                unset($product_order[$key]);
         }
+
         if (count($product_pay) > 0) 
-        Session::forget('product-pay');
+        Session::put('product-pay',$product_pay);
         else 
         Session::forget('product-pay');
     }
@@ -195,12 +208,17 @@ Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi'])
 
 Route::get('get-address', [XuLiAdressController::class, 'getDiaChiDefault']);
 
-Route::get('/profile', function() {
-    return view('profile-customer');
-});
+Route::get('/profile', [profileController::class, 'getProfile']);
+
+Route::get('/get-thanh-pho', [profileController::class, 'getQuanHuyen']);
+Route::get('/get-xa', [profileController::class, 'getXa']);
+
+Route::get('/get-information-customer', [profileController::class, 'getInput']);
 
 Route::get('/edit-profile', function() {
     return view('/component/edit-profile');
 });
 
 Route::get('xu-li-don-dat-hang', [OrderController::class, 'addOrder']);
+
+Route::get('sua-dia-chi', [profileController::class, 'editAddressCustomer']);

@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/profile.js"></script>
     <title>Delta Comestic - Shop Mỹ Phẩm Hàn Quốc Tốt Uy Tín</title>
 </head>
 <body>
     @include('layout/header')
-    <div class = "profile" style="background-color: #f5f5f5;height: 1200px;">
+    <div class = "profile" style="background-color: #f5f5f5;padding-bottom: 2rem;">
          <div class  = "page-profile" style="display: flex;">
             <div class = "page-left-profile" style="width: 20%;">
                  <div class="account-customer" style="display:flex;">
@@ -57,11 +59,12 @@
                         <p style="color:gray;">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
                     </div>
                     <div class = "content-my-profile" style="margin-top: 1rem;line-height: 3rem;font-size: 15px;color: gray;" >
+                    @foreach($ttkh as $kh)
                         <div class = "user-name">
-                            Tên Đăng Nhập <span style="padding-left: 5rem;color:black;">trieuditu2k3</span>
+                            Tên Đăng Nhập <span style="padding-left: 5rem;color:black;">{{ $kh->TenDangNhap }}</span>
                         </div>
                         <div class = "email">
-                            Email  <span style="padding-left: 9.875em;color:black;">trieuditu@gmail.com </span>
+                            Email  <span style="padding-left: 9.875em;color:black;">{{$kh->Email}} </span>
                         </div>
                         <div class = "change-email">
                             Email mới  <input type = "text" style="width: 460px; height: 35px;margin-left:7.5rem;">
@@ -69,6 +72,7 @@
                         <div class = "btn-change" style="width: 50%;margin:auto;">
                             <button type = button>Lưu</button>
                         </div>
+                        @endforeach
                     </div>
              </div>
              <div class  = "change-password" style="padding-left:1rem;padding-top:1rem;display:none;">
@@ -78,13 +82,13 @@
                 </div>
                 <div class = "infor-change-password" >
                     <div class  = "password-old">
-                        Mật Khẩu Hiện Tại  <input type = "text" style="margin-left:1rem;">
+                        Mật Khẩu Hiện Tại  <input type = "password" style="margin-left:1rem;">
                     </div>
                     <div class  = "password-new">
-                        Mật Khẩu Mới  <input type="text"style="margin-left:3rem;">
+                        Mật Khẩu Mới  <input type="password"style="margin-left:3rem;">
                     </div>
                     <div class  = "confirm-password">
-                        Xác nhận mật khẩu <input type="text" style="margin-left:0.75rem;">
+                        Xác nhận mật khẩu <input type="password" style="margin-left:0.75rem;">
                     </div>
                     <div class  = "btn-change-password" style="width: 45%;margin:auto;">
                         <button type = "button">Xác nhận</button>
@@ -95,27 +99,8 @@
                   <div class = "title-reset-address" style="border-bottom: 1px solid #ccc;padding:15px;font-size: 20px;">
                       Địa Chỉ Của Tôi
                   </div>
-                  <div class  = "content-change-address" style="display: flex;line-height: 2rem;font-size:15px;margin-top: 1rem;">
-                      <div class = "infor-all-address-customer" style="width: 50%;margin:auto;">
-                          <div class = "first-last-name">
-                              Họ & Tên  <span style="padding-left:2rem;">Triệu Di Tú</span>
-                          </div>
-                          <div class = "number-phone">
-                              Số điện thoại  <span style="padding-left:1rem;">(+84)&nbsp;98765432</span>
-                          </div>
-                          <div class  = "address" style="display: flex;">
-                              Địa chỉ 
-                              <div style="max-width: 40%;padding-left: 3.3675rem;">Thôn Chợ Kiến,Xã Cô Tô,Huyện Trí Tôn,An Giang</div>
-                          </div>
-                      </div>  
-                      <div class  = "edit-delete-address" style="display: flex;width: 30%;">
-                          <div class  = "edit-address" style="padding-right: 1rem;">
-                              <span>Sửa</span>
-                          </div>
-                          <div class  = "delete-address">
-                              <span>Xóa</span>
-                          </div>
-                      </div>
+                  <div id = "all-address">
+                        @include('component/allMyAddress', ['dc' => $dc, 'diaChi'=> $diaChi])
                   </div>
              </div>
              <div class  = "bill-buy-product" style="display:none;">
@@ -124,5 +109,9 @@
            </div>
     </div>
 </div>
+@include('layout/footer')
+<div class = "insert-address" id="edit-address" style="display: none;">
+            @include('component/form-edit-address', ['thanhPho' => $thanhPho, 'quan' => $quan, 'xa' => $xa, 'input' => $input])
+        </div>
 </body>
 </html>

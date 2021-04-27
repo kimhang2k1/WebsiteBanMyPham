@@ -29,7 +29,12 @@ class registController extends Controller
           return view('regist')->withErrors($errors)->with('register', $request->all());
        }
        else {
+         $string = "KH1000000";
+         $customer = explode('KH',$string);
+         $number = $customer[1];
+         $number++;
       KhachHang::create(
+         'KH'.$number,
          $request->name_user,
          $request->email,
          md5($request->password)
