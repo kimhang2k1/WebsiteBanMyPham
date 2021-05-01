@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChiTietDonHang;
 use App\Models\DiaChiGiaoHang;
+use App\Models\DonHang;
 use App\Models\KhachHang;
 use App\Models\ThongTinKhachHang;
 use Illuminate\Http\Request;
@@ -31,9 +33,25 @@ class profileController extends Controller
         $input = ThongTinKhachHang::where('IDKhachHang', '=', $id)->where('ID', '=', $request->id)->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
         ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
         ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get(); 
+        $order = DB::table('donhang')->where('IDKhachHang', '=', $id)->get();
+        if(count($order) > 0) {
+            foreach($order as $key =>$value) {
+                    $bill = DB::table('donhang')->where('donhang.IDDonHang', '=', $order[$key]->IDDonHang)
+                    ->JOIN('chitietdonhang', 'donhang.IDDonHang', '=', 'chitietdonhang.IDDonHang')
+                    ->JOIN('sanpham', 'chitietdonhang.IDSanPham', '=','sanpham.IDSanPham')
+                    ->leftJOIN('mausanpham', 'mausanpham.IDMau', '=', 'chitietdonhang.IDMau')
+                    ->get();                 
+                }
+             
+               
+                 
+              
+             
+            
+       
         return view('profile-customer')->with('ttkh', $ttkh)->with('dc', $dc)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
-        ->with('diaChi', $diaChi)->with('input', $input);
-
+        ->with('diaChi', $diaChi)->with('input', $input)->with('bill', $bill)->with('order', $order);
+            }
     }
 
     public function getQuanHuyen(Request $request) {
@@ -114,6 +132,22 @@ class profileController extends Controller
             return response()->json([
                 'view' => "" . view('component/allMyAddress')->with('dc', $dc)->with('diaChi', $diaChi)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)]);
         }
+    }
+
+    public function editDefaultAddress(Request $request)
+    {
+       $id = Session::get('user')[0]->IDKhachHang;
+       DB::update("update diachigiaohang set ID = ?  where IDKhachHang = ? ",[$request->id,$id]); 
+       $dh = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
+       $dc = ThongTinKhachHang::whereRaw("IDKhachHang = '".$id."' and not ID = '".$dh[0]->ID."'")->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+       ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
+       ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
+
+       $diaChi = DiaChiGiaoHang::where('diachigiaohang.IDKhachHang', '=', $id)->JOIN('thongtinkhachhang', 'diachigiaohang.ID', '=', 'thongtinkhachhang.ID')
+       ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+       ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
+       ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
+       return view('component/allMyAddress')->with('dc', $dc)->with('diaChi', $diaChi);
     }
 
 }

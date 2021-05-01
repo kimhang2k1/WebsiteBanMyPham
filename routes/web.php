@@ -14,6 +14,7 @@ use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\DiaChi;
+use App\Models\DiaChiGiaoHang;
 use App\Models\ThongTinKhachHang;
 
 /*
@@ -208,13 +209,12 @@ Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi'])
 
 Route::get('get-address', [XuLiAdressController::class, 'getDiaChiDefault']);
 
-Route::get('/profile', [profileController::class, 'getProfile']);
-
+Route::get('/profile', [profileController::class, 'getProfile',]);
+Route::post('/profile', [OrderController::class, 'addOrder']);
 Route::get('/get-thanh-pho', [profileController::class, 'getQuanHuyen']);
 Route::get('/get-xa', [profileController::class, 'getXa']);
 
 Route::get('/get-information-customer', [profileController::class, 'getInput']);
-
 Route::get('/edit-profile', function() {
     return view('/component/edit-profile');
 });
@@ -222,3 +222,5 @@ Route::get('/edit-profile', function() {
 Route::get('xu-li-don-dat-hang', [OrderController::class, 'addOrder']);
 
 Route::get('sua-dia-chi', [profileController::class, 'editAddressCustomer']);
+
+Route::get('/thay-doi-dia-chi', [profileController::class, 'editDefaultAddress']);

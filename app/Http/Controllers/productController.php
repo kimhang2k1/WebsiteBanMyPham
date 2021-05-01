@@ -49,7 +49,7 @@ class productController extends Controller
             if ($request->LoaiSapXep == "ASC")
             {
                 $sort_up = DB::table('sanpham')->orderby('GiaSP', 'ASC')->get();
-            return view('component\allProduct')->with('productbyId', $sort_up);
+                return view('component\allProduct')->with('productbyId', $sort_up);
             }
             else if($request->LoaiSapXep == "DESC") {
                 $sort_up = DB::table('sanpham')->orderby('GiaSP', 'DESC')->get();

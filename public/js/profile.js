@@ -120,9 +120,24 @@ function chinhSuaThongTin(event, id) {
    })
 }
 function printErrorMsg (msg) {
-   $(".print-error-msg").find("ul").html('');
-   $(".print-error-msg").css('display','block');
-   $.each( msg, function( key, value ) {
-      $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
-   });
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display','block');
+    $.each( msg, function( key, value ) {
+        $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+    });
    }
+
+function changeDefaultAddress(id) {
+    $.ajax({
+        method: "GET", 
+        url: "/thay-doi-dia-chi",
+        data: {
+           id : id
+        },
+        success:function(response) {
+            $('#all-address').html(response);
+        }
+    })
+}
+
+

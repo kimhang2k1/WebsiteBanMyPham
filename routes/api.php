@@ -20,10 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('demo',function() {
-    DB::select('SELECT IDKhachHang FROM khachhang Ỏ');
-    $string = "KH1001";
+    $id = DB::select('SELECT IDKhachHang FROM khachhang');
+     $string = $id[0]->IDKhachHang;
     $data = explode('KH',$string);
     $number = $data[1];
     $number++;
-    return "KH".$number;
+    return "KH".$string;
 });

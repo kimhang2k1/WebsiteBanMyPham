@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KhachHang;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class registController extends Controller
@@ -29,17 +30,36 @@ class registController extends Controller
           return view('regist')->withErrors($errors)->with('register', $request->all());
        }
        else {
-         $string = "KH1000000";
-         $customer = explode('KH',$string);
-         $number = $customer[1];
-         $number++;
-      KhachHang::create(
-         'KH'.$number,
-         $request->name_user,
-         $request->email,
-         md5($request->password)
-     );
-     return redirect()->to('dangnhap')->send();
+          $kh = DB::select('SELECT IDKhachHang FROM khachhang ORDER BY IDKhachHang DESC');
+          if(count($kh) > 0) {
+            $string = $kh[0]->IDKhachHang;
+            $customer = explode('KH',$string);
+            $number = $customer[1];
+            $number++;
+            KhachHang::create(
+               'KH'.$number,
+               $request->name_user,
+               $request->email,
+               md5($request->password)
+           );
+           return redirect()->to('dangnhap')->send();
+          }
+          else {
+            $string = "KH1000000";
+            $customer = explode('KH',$string);
+            $number = $customer[1];
+            $number++;
+            KhachHang::create(
+               'KH'.$number,
+               $request->name_user,
+               $request->email,
+               md5($request->password)
+           );
+           return redirect()->to('dangnhap')->send();
+          }
+        
+
+      
    }
     
      

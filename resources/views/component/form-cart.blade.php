@@ -16,7 +16,8 @@
                 <div class = "all-product-cart" id = "{{ $giohang->STT}}delete">
                    <div class = "items-in-cart" id="{{ $giohang->STT }}" style= "display:flex;font-size:17px;padding-top:1rem;">
                         <div class = "check-box-cart" style = "margin-right:1rem;"><input onchange="onchangetoggle(this)" 
-                        type = "checkbox" name = "item"  style =" width: 16px; height: 16px;" unchecked data="false" id="{{$giohang->STT}}Checkbox"></div>
+                        type = "checkbox" name = "item"  style =" width: 16px; height: 16px;" unchecked data="false" 
+                        id="{{$giohang->STT}}Checkbox"></div>
                         <div class  = "items-name" style = "width:45%;color:black;display:flex;">
                            <div class = "images" style = "margin-right:1rem;">
                                <img src = "/img/{{ $giohang->HinhAnh }}" style = "width:80px;">
@@ -56,7 +57,7 @@
                             <div class=  "btn">
                               <a href = "{{ url('checkout-page/') }} ">Mua Hàng</a>
                             </div>
-
+                
                         </div>
                     </div>
                 </div>

@@ -14,12 +14,17 @@
             <div style="max-width: 40%;padding-left: 3.3675rem;color:black;">{{ $myaddress->SoNha}},{{ $myaddress->TenXa}},{{ $myaddress->TenQuan}},{{ $myaddress->TenThanhPho}}</div>
         </div>
     </div>  
-    <div class  = "edit-delete-address" style="display: flex;width: 30%;">
-        <div class  = "edit-address" style="padding-right: 1rem;">
-            <span onclick="openModalEditAddress('{{$myaddress->ID}}')">Sửa</span>
+    <div style="width: 30%;">
+        <div class  = "edit-delete-address" style="display: flex;">
+            <div class  = "edit-address" style="padding-right: 1rem;">
+                <span onclick="openModalEditAddress('{{$myaddress->ID}}')">Sửa</span>
+            </div>
+            <div class  = "delete-address">
+                <span>Xóa</span>
+            </div>
         </div>
-        <div class  = "delete-address">
-            <span>Xóa</span>
+        <div class = "btn-change-default-address">
+            <button type="button" style="cursor: not-allowed;" disabled>Thiết lập mặc định</button>
         </div>
     </div>
 </div>
@@ -37,13 +42,18 @@
             Địa chỉ 
             <div style="max-width: 40%;padding-left: 3.3675rem;color:black;">{{ $address->SoNha}},{{ $address->TenXa}},{{ $address->TenQuan}},{{ $address->TenThanhPho}}</div>
         </div>
-    </div>  
-    <div class  = "edit-delete-address" style="display: flex;width: 30%;">
-        <div class  = "edit-address" style="padding-right: 1rem;">
-            <span onclick="openModalEditAddress('{{$address->ID}}')">Sửa</span>
+    </div> 
+    <div style="width: 30%;"> 
+        <div class  = "edit-delete-address" style="display: flex;width: 30%;">
+            <div class  = "edit-address" style="padding-right: 1rem;">
+                <span onclick="openModalEditAddress('{{$address->ID}}')">Sửa</span>
+            </div>
+            <div class  = "delete-address">
+                <span>Xóa</span>
+            </div>
         </div>
-        <div class  = "delete-address">
-            <span>Xóa</span>
+        <div class = "btn-change-default-address">
+                <button type="button" onclick="changeDefaultAddress('{{$address->ID}}')" >Thiết lập mặc định</button>
         </div>
     </div>
 </div>

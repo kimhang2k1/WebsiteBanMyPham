@@ -53,6 +53,7 @@ function printErrorMsg (msg) {
 // }
 
 function loadDiaChiAfterAdd() {
+
     var address = document.getElementsByName('diachi');
     for (var i = 0; i < address.length; i++) {
         if (address[i].checked) {
@@ -70,6 +71,8 @@ function loadDiaChiAfterAdd() {
                 $('#default-address').html(response);
                 document.getElementById('default-address').style.display = 'block'
                 document.getElementById('myAddress').style.display = 'none'
+               
+
                 
     
             }
