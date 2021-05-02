@@ -210,7 +210,7 @@ Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi'])
 Route::get('get-address', [XuLiAdressController::class, 'getDiaChiDefault']);
 
 Route::get('/profile', [profileController::class, 'getProfile',]);
-Route::post('/profile', [OrderController::class, 'addOrder']);
+Route::post('/profile', [OrderControlsler::class, 'addOrder']);
 Route::get('/get-thanh-pho', [profileController::class, 'getQuanHuyen']);
 Route::get('/get-xa', [profileController::class, 'getXa']);
 
@@ -224,3 +224,12 @@ Route::get('xu-li-don-dat-hang', [OrderController::class, 'addOrder']);
 Route::get('sua-dia-chi', [profileController::class, 'editAddressCustomer']);
 
 Route::get('/thay-doi-dia-chi', [profileController::class, 'editDefaultAddress']);
+
+
+Route::get('/admin/login', function() {
+    return view('admin/login');
+});
+
+Route::get('/admin/home', function() {
+    return view('admin/home');
+});
