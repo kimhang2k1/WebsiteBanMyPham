@@ -1,6 +1,12 @@
 .bg-2A3F54 {
-    background-color: #2A3F54;
+    background-color: steelblue;
 }
 .bg-darkslateblue {
     background-color: darkslateblue;
+}
+.w {
+    width: 23%;
+} 
+.font-timenewroman {
+    font-family: 'Times New Roman', Times, serif;
 }
