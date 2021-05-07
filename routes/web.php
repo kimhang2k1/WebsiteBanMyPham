@@ -210,7 +210,6 @@ Route::get('them-dia-chi-giao-hang', [XuLiAdressController::class, 'addDiaChi'])
 Route::get('get-address', [XuLiAdressController::class, 'getDiaChiDefault']);
 
 Route::get('/profile', [profileController::class, 'getProfile',]);
-Route::post('/profile', [OrderControlsler::class, 'addOrder']);
 Route::get('/get-thanh-pho', [profileController::class, 'getQuanHuyen']);
 Route::get('/get-xa', [profileController::class, 'getXa']);
 

@@ -110,7 +110,7 @@
                 </div>
                 <div class="w-80 rounded-lg  pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl flex" style="border:1px solid palevioletred;
                background-color:palevioletred;">
-                     <div class="w-2/12 pt-4">
+                    <div class="w-2/12 pt-4">
                         <img src="/img/money.png" class="w-12">
                     </div>
                     <div class="w-4/5 ">
@@ -128,28 +128,38 @@
                 </div>
             </div>
 
-            <div class = "w-full border-2 border-gray-100 bg-white font-timenewroman">
-                 <div class = "form">
-                    <h2 class = "p-4 text-xl font-bold">Tất Cả Sản Phẩm</h2>
-                 </div>
-                  <div class = "w-full pl-4 flex">
-                      <div class = "input-search">
-                            <input class = " pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type = "text" name = "search" placeholder="Mã / Tên Sản Phẩm">
-                      </div>
-                      <div class = "select">
-                           <select class = "w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;">
-                               <option value = "">Son Môi</option>
-                           </select>
-                      </div>
-                      <div class = "search">
-                          <button class="w-12 text-white rounded-sm" type = "button" style="border:1px solid #2e6da4;height: 34px;background-color:#2e6da4 ;"><i class="fas fa-search"></i></button>
-                      </div>
-                      <div class = "insert">
-                          <button type= "button">Thêm sản phẩm </button>
-                      </div>
-                  </div>
-                  <table class = "m-4" style="width: 98%;font-size:16px;">
-                     <tr>
+            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman">
+                <div class="form">
+                    <h2 class="p-4 text-xl font-bold">Tất Cả Sản Phẩm</h2>
+                </div>
+                <div class="w-full flex">
+                    <div class="pl-4 flex" style="width: 70%;">
+                        <div class="input-search">
+                            <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search" placeholder="Mã / Tên Sản Phẩm">
+                        </div>
+                        <div class="select">
+                            <select class="w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;">
+                                <option value="">Son Môi</option>
+                            </select>
+                        </div>
+                        <div class="search">
+                            <button class="w-12 text-white rounded-sm" type="button" style="border:1px solid #2e6da4;height: 34px;background-color:#2e6da4 ;"><i class="fas fa-search"></i></button>
+                        </div>
+
+                    </div>
+                    <div class="flex" style="width: 30%;">
+                        <div class="insert ">
+                            <button class="ring-2 text-white w-40 leading-8 rounded-sm" style="background-color:#2e6da4;font-size:17px;" type="button">
+                            <i class="fas fa-plus-circle"></i> &nbsp;&nbsp;Thêm sản phẩm </button>
+                        </div>
+                        <div class="file ml-4">
+                            <button class="text-white w-40 leading-8 rounded-sm" style="background-color:green;font-size:17px;border:0;" type="button">
+                            <i class="fas fa-file-excel"></i> &nbsp;&nbsp;Nhập từ file </button>
+                        </div>
+                    </div>
+                </div>
+                <table class="m-4" style="width: 98%;font-size:14px;">
+                    <tr class = "font-bold">
                         <td>ID Sản Phẩm</td>
                         <td>Tên Sản Phẩm</td>
                         <td>Loại Sản Phẩm</td>
@@ -160,24 +170,24 @@
                         <td>Ngày Hết Hạn</td>
                         <td>Trạng Thái</td>
                         <td>Tác vụ</td>
-                        
-                     </tr>
-                     <tr>
+
+                    </tr>
+                    <tr>
                         <td>SP00001</td>
                         <td>Son Kem Lì Velet Tint Version 1</td>
                         <td>Son Môi</td>
                         <td>121.000</td>
-                        <td><img src = "/img/sonBlackRouge.jpg" class = "ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;"></td>
+                        <td><img src="/img/sonBlackRouge.jpg" class="ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;"></td>
                         <td>Black Rouge</td>
                         <td>12/4/2020</td>
                         <td>12/4/2021</td>
-                        <td><span class = "rounded-full text-white" style="background-color: lightseagreen;border:0;padding:6px;">Còn Hàng</span></td>
-                        <td class = "text-xl">
-                        <i class="fas fa-edit"style = "padding:8px;color:#2e6da4;"></i>
-                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                        <td><span class="rounded-full text-white" style="background-color: lightseagreen;border:0;padding:6px;">Còn Hàng</span></td>
+                        <td class="text-xl">
+                            <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;"></i>
+                            <i class="fas fa-trash-alt" style="color:red;"></i>
                         </td>
-                     </tr>
-                  </table>
+                    </tr>
+                </table>
             </div>
 
         </div>
