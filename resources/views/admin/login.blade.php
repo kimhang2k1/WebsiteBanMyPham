@@ -14,13 +14,16 @@
             <div class = "w-1/4 m-auto">
                 <img src= "/img/logo.png" class = "w-full">
             </div> 
-            <div class = "text-center font-serif mt-10">
-                   <p>Tên Đăng Nhập <input type="text" name = "username" placeholder="Nhập tên đăng nhập" class = "border-2 border-grey-500 px-10 py-2 ml-1 "></p>
-                   <p>Mật Khẩu <input type="password" name = "pass"  placeholder = "Mật Khẩu" value = "" class = "border-2 border-grey-500 px-10 py-2 ml-11 mt-3"></p>
-            </div>
-            <div class = "btn text-center font-serif">
-                 <button type = "button" class = "border-2 border-blue-400 bg-blue-400 p-2 text-white rounded-md my-4 mx-4 ml-20">Đăng Nhập</button>
-            </div>
+            <form action = "xulidangnhap" method="POST">
+            {{ csrf_field() }}
+                <div class = "text-center font-serif mt-10">
+                    <p>Tên Đăng Nhập <input type="text" name = "username" placeholder="Nhập tên đăng nhập" class = "border-2 border-grey-500 px-10 py-2 ml-1 "></p>
+                    <p>Mật Khẩu <input type="password" name = "pass"  placeholder = "Mật Khẩu" value = "" class = "border-2 border-grey-500 px-10 py-2 ml-11 mt-3"></p>
+                </div>
+                <div class = "btn text-center font-serif">
+                    <button type = "submit" class = "border-2 border-blue-400 bg-blue-400 p-2 text-white rounded-md my-4 mx-4 ml-20">Đăng Nhập</button>
+                </div>
+            </form>
        </div>
     </div>
 </body>

@@ -232,3 +232,7 @@ Route::get('/admin/login', function() {
 Route::get('/admin/home', function() {
     return view('admin/home');
 });
+
+Route::post('/admin/xulidangnhap', [Admin\ProcessLoginController::class, 'getLogin']);
+
+Route::get('/admin/home', [Admin\ProductManagementController::class, 'getProduct']);

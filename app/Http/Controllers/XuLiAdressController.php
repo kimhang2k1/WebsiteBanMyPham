@@ -60,7 +60,7 @@ class XuLiAdressController extends Controller
          $dcGiaoHang = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
         if(count($dcGiaoHang) > 0)  
         {
-            DB::update("update diachigiaohang set ID = ?  where IDKhachHang = ? ",[$request->ID,$id]); 
+            DB::update("update diachigiaohang set ID = ?, TrangThai = 'Mặc Định'  where IDKhachHang = ? ",[$request->ID,$id]); 
             $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
             ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
             ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
@@ -70,7 +70,7 @@ class XuLiAdressController extends Controller
            return view('component/addressCustomer')->with('diaChiGiaoHang', $diaChiGiaoHang);
         }
         else {
-            DiaChiGiaoHang::create($request->ID, $id, NULL); 
+            DiaChiGiaoHang::create($request->ID, $id, 'Mặc Định'); 
 
             $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
             ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')

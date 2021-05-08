@@ -12,11 +12,30 @@
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script src="/js/process-admin.js"></script>
     <title>Document</title>
     <style>
         table tr td {
             line-height: 2rem;
             border: 1px solid #ccc;
+            text-align: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        th {
+            width: 1%;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        td {
+            width: 1%;
+            white-space: nowrap;
             text-align: center;
         }
     </style>
@@ -29,7 +48,7 @@
         </div>
         <div class="w-3/4" style="height: 4.25rem;background-color: steelblue;">
             <div class="text-white pr-8 pl-3" style="float:right;line-height: 4rem;">
-                Trà Thị Kim Hằng
+              {{ Session::get('account')[0]->Ten}}
             </div>
             <div class="pt-4" style="float:right">
                 <img src="/img/admin.png" class="w-8">
@@ -43,8 +62,8 @@
                     <img src="/img/admin.png" class="w-20">
                 </div>
                 <div class="w-full ml-2 font-timenewroman text-white pt-3">
-                    <p class="font-bold">Trà Thị Kim Hằng</p>
-                    <p class="text-sm text-gray-200">trahang@gmail.com</p>
+                    <p class="font-bold">      {{ Session::get('account')[0]->Ten}}</p>
+                    <p class="text-sm text-gray-200">      {{ Session::get('account')[0]->Email}}</p>
 
                 </div>
             </div>
@@ -52,50 +71,84 @@
                 <div class="w-full text-white py-4 pl-4" style="background-color: cadetblue;">
                     CHỨC NĂNG HỆ THỐNG
                 </div>
-                <div class="home w-full p-4  hover:bg-gray-300 ">
+                <div class="home w-full p-4  hover:bg-gray-300 " onclick="openManagement(0)">
                     <div class="w-full flex text-white">
                         <div class="icon pr-3.5">
-                            <i class="fas fa-home"></i>
+                            <span class="material-icons">
+                                leaderboard
+                            </span>
                         </div>
                         <div class="w-full">
                             Bảng Điều Khiển
                         </div>
                     </div>
                 </div>
-                <div class="manage w-full p-4 hover:bg-gray-300">
-                    <div class="w-full flex text-white">
+                <div class="manage w-full p-4 hover:bg-gray-300" onclick="openManagement(1)">
+                    <div class="w-full flex text-white" style="padding-left: 3px;">
                         <div class="icon pr-3.5">
-                            <i class="fas fa-tasks"></i>
+                            <span class="material-icons">
+                                description
+                            </span>
+
                         </div>
                         <div class="w-full">
                             Quản lý sản phẩm
                         </div>
                     </div>
                 </div>
-                <div class="order w-full p-4  hover:bg-gray-300">
+                <div class="order w-full p-4  hover:bg-gray-300" onclick="openManagement(2)">
                     <div class="w-full flex text-white">
                         <div class="icon pr-3.5">
-                            <i class="fas fa-file-invoice"></i>
+                            <span class="material-icons">
+                                print
+                            </span>
+
                         </div>
                         <div class="w-full">
                             Quản lý đơn hàng
                         </div>
                     </div>
                 </div>
-                <div class="customer w-full p-4 border-b-2 hover:bg-gray-300">
+                <div class="customer w-full p-4 hover:bg-gray-300" onclick="openManagement(3)">
                     <div class="w-full flex text-white">
                         <div class="icon pr-3.5">
-                            <i class="fas fa-user-alt"></i>
+                            <span class="material-icons">
+                                manage_accounts
+                            </span>
                         </div>
                         <div class="w-full">
                             Quản lý khách hàng
                         </div>
                     </div>
                 </div>
+                <div class="customer w-full p-4  hover:bg-gray-300" onclick="openManagement(4)">
+                    <div class="w-full flex text-white">
+                        <div class="icon pr-3.5">
+                            <span class="material-icons">
+                                supervisor_account
+                            </span>
+                        </div>
+                        <div class="w-full">
+                            Quản lý tài khoản
+                        </div>
+                    </div>
+                </div>
+                <div class="customer w-full p-4 hover:bg-gray-300" onclick="openManagement(5)">
+                    <div class="w-full flex text-white">
+                        <div class="icon pr-3.5">
+                            <span class="material-icons">
+                                dashboard
+                            </span>
+                        </div>
+                        <div class="w-full">
+                            Quản lý danh mục sản phẩm
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="w-4/5" style="background-color: whitesmoke;">
-            <div class="w-full flex justify-evenly  m-4 font-timenewroman">
+        <div class="w-4/5">
+            <div class="w-full flex justify-evenly  m-4 font-timenewroman managements" id="statistical">
                 <div class="w-60 rounded-lg pl-4 pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl flex" style="border:1px solid cornflowerblue;
                background-color: cornflowerblue;">
                     <div class="w-1/4 pt-3">
@@ -127,67 +180,20 @@
                     <p>Tổng Khách Hàng </p>
                 </div>
             </div>
-
-            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman">
-                <div class="form">
-                    <h2 class="p-4 text-xl font-bold">Tất Cả Sản Phẩm</h2>
-                </div>
-                <div class="w-full flex">
-                    <div class="pl-4 flex" style="width: 70%;">
-                        <div class="input-search">
-                            <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search" placeholder="Mã / Tên Sản Phẩm">
-                        </div>
-                        <div class="select">
-                            <select class="w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;">
-                                <option value="">Son Môi</option>
-                            </select>
-                        </div>
-                        <div class="search">
-                            <button class="w-12 text-white rounded-sm" type="button" style="border:1px solid #2e6da4;height: 34px;background-color:#2e6da4 ;"><i class="fas fa-search"></i></button>
-                        </div>
-
-                    </div>
-                    <div class="flex" style="width: 30%;">
-                        <div class="insert ">
-                            <button class="ring-2 text-white w-40 leading-8 rounded-sm" style="background-color:#2e6da4;font-size:17px;" type="button">
-                            <i class="fas fa-plus-circle"></i> &nbsp;&nbsp;Thêm sản phẩm </button>
-                        </div>
-                        <div class="file ml-4">
-                            <button class="text-white w-40 leading-8 rounded-sm" style="background-color:green;font-size:17px;border:0;" type="button">
-                            <i class="fas fa-file-excel"></i> &nbsp;&nbsp;Nhập từ file </button>
-                        </div>
-                    </div>
-                </div>
-                <table class="m-4" style="width: 98%;font-size:14px;">
-                    <tr class = "font-bold">
-                        <td>ID Sản Phẩm</td>
-                        <td>Tên Sản Phẩm</td>
-                        <td>Loại Sản Phẩm</td>
-                        <td>Giá Sản Phẩm</td>
-                        <td>Hình Ảnh</td>
-                        <td>Thương Hiệu</td>
-                        <td>Ngày Sản Xuất</td>
-                        <td>Ngày Hết Hạn</td>
-                        <td>Trạng Thái</td>
-                        <td>Tác vụ</td>
-
-                    </tr>
-                    <tr>
-                        <td>SP00001</td>
-                        <td>Son Kem Lì Velet Tint Version 1</td>
-                        <td>Son Môi</td>
-                        <td>121.000</td>
-                        <td><img src="/img/sonBlackRouge.jpg" class="ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;"></td>
-                        <td>Black Rouge</td>
-                        <td>12/4/2020</td>
-                        <td>12/4/2021</td>
-                        <td><span class="rounded-full text-white" style="background-color: lightseagreen;border:0;padding:6px;">Còn Hàng</span></td>
-                        <td class="text-xl">
-                            <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;"></i>
-                            <i class="fas fa-trash-alt" style="color:red;"></i>
-                        </td>
-                    </tr>
-                </table>
+            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                @include('admin/component/ProductManagement', ['product' =>$product])
+            </div>
+            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                @include('admin/component/OrderManagement')
+            </div>
+            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                @include('admin/component/AccountManagement')
+            </div>
+            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                @include('admin/component/CustomerManagement')
+            </div>
+            <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                @include('admin/component/CategoryManagement')
             </div>
 
         </div>

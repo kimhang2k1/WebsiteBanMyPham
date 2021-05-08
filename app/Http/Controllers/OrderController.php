@@ -7,6 +7,7 @@ use App\Models\DiaChiGiaoHang;
 use App\Models\DonHang;
 use App\Models\KhachHang;
 use App\Models\ThongTinKhachHang;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -14,30 +15,10 @@ use Illuminate\Support\Facades\Session;
 class OrderController extends Controller
 {
     public function addOrder(Request $request) {
-            $id = Session::get('user')[0]->IDKhachHang;
-            $ttkh = KhachHang::where('IDKhachHang', '=', $id)->get();
-            $dh = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
-            $dc = ThongTinKhachHang::whereRaw("IDKhachHang = '".$id."' and not ID = '".$dh[0]->ID."'")->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-            ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
-            ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
-
-            $diaChi = DiaChiGiaoHang::where('diachigiaohang.IDKhachHang', '=', $id)->JOIN('thongtinkhachhang', 'diachigiaohang.ID', '=', 'thongtinkhachhang.ID')
-            ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-            ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
-            ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
-            $quan = DB::table('quanhuyen')->get();
-            $thanhPho = DB::table('tinhthanhpho')->get();
-            $xa = DB::table('xa')->get();
-    
-            $input = ThongTinKhachHang::where('IDKhachHang', '=', $id)->where('ID', '=', $request->id)->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
-            ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
-            ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get(); 
-    
-            $bill = DonHang::where('IDKhachHang', '=', $id)->groupBy('chitietdonhang.IDDonHang')->JOIN('chitietdonhang', 'donhang.IDDonHang','=', 'chitietdonhang.IDDonHang')
-            ->JOIN('sanpham', 'chitietdonhang.IDSanPham', '=','sanpham.IDSanPham')->leftJOIN('mausanpham', 'mausanpham.IDMau', '=', 'chitietdonhang.IDMau')
-            ->get();
-            
-            $currentDateTime = date('Y-m-d H:i:s');
+            $id = Session::get('user')[0]->IDKhachHang;        
+           $currentDateTime = date('Y-m-d H:i:s');
+           $datetime = new DateTime($currentDateTime);
+           $datetime->modify('+2 day');
             $order = DB::select("SELECT IDDonHang FROM donhang ORDER BY IDDonHang DESC");
             $IDDiaChiGiaoHang = Session::get('diaChiGiaoHang')[0]->ID;
             if(count($order) > 0) {
@@ -45,14 +26,14 @@ class OrderController extends Controller
                 $data = explode('DELTA',$string);
                 $number = $data[1];
                 $number++;
-                DonHang::create('DELTA'.$number,$id,$currentDateTime, NULL, $IDDiaChiGiaoHang, NULL);
+                DonHang::create('DELTA'.$number,$id,$currentDateTime, $datetime->format('Y-m-d H:i:s'), $IDDiaChiGiaoHang, NULL);
             }
             else {
                 $string = "DELTA1000000";
                 $data = explode('DELTA',$string);
                 $number = $data[1];
                 $number++;
-                DonHang::create('DELTA'.$number,$id,$currentDateTime, NULL, $IDDiaChiGiaoHang, NULL);
+                DonHang::create('DELTA'.$number,$id,$currentDateTime, $datetime->format('Y-m-d H:i:s'), $IDDiaChiGiaoHang, NULL);
             }
            
                 
@@ -73,8 +54,7 @@ class OrderController extends Controller
                     ->where('giohang.STT','=', $value)
                     ->delete();
                 }
-                return view('profile-customer')->with('ttkh', $ttkh)->with('dc', $dc)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
-                ->with('diaChi', $diaChi)->with('input', $input)->with('bill', $bill);
+                return redirect()->to('profile')->send();
             
             }
         }
