@@ -18,10 +18,12 @@
         <td>Email</td>
         <td>Mật Khẩu</td>
     </tr>
+    @foreach($acc as $a)
     <tr>
-        <td>KH100001</td>
-        <td>kimhang</td>
-        <td class="px-40">kimhang</td>
-        <td class="px-40">hang123</td>
+        <td>{{ $a->IDKhachHang}}</td>
+        <td>{{ $a->TenDangNhap}}</td>
+        <td class="px-20">{{ $a->Email}}</td>
+        <td class="px-40">{{ $a->MatKhau}}</td>
     </tr>
+    @endforeach
 </table>

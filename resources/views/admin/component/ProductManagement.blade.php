@@ -8,8 +8,11 @@
         </div>
         <div class="select">
             <select class="w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;">
-                <option value="">Son Môi</option>
+            @foreach($category as $cat)
+                <option value="">{{ $cat->TenNhom}}</option>
+                @endforeach
             </select>
+           
         </div>
         <div class="search">
             <button class="w-12 text-white rounded-sm" type="button" style="border:1px solid #2e6da4;height: 34px;background-color:#2e6da4 ;"><i class="fas fa-search"></i></button>
@@ -18,7 +21,7 @@
     </div>
     <div class="flex" style="width: 30%;">
         <div class="insert ">
-            <button class="ring-2 text-white w-40 leading-8 rounded-sm" style="background-color:#2e6da4;font-size:17px;" type="button">
+            <button class="ring-2 text-white w-40 leading-8 rounded-sm" style="background-color:#2e6da4;font-size:17px;" type="button" onclick="openModalAddProduct()">
                 <i class="fas fa-plus-circle"></i> &nbsp;&nbsp;Thêm sản phẩm </button>
         </div>
         <div class="file ml-4">

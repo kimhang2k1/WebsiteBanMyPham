@@ -235,4 +235,8 @@ Route::get('/admin/home', function() {
 
 Route::post('/admin/xulidangnhap', [Admin\ProcessLoginController::class, 'getLogin']);
 
-Route::get('/admin/home', [Admin\ProductManagementController::class, 'getProduct']);
+Route::get('/admin/home', [Admin\ManagementController::class, 'getInfor']);
+
+Route::get('/oke', function() {
+    return view('admin/form');
+});

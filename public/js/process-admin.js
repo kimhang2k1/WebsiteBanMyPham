@@ -10,3 +10,10 @@ function openManagement(index) {
        }
     }
 }
+
+function openModalAddProduct() {
+    document.getElementsByClassName('form-add-product')[0].style.display = "block";
+}
+ function closeModalAddProduct() {
+    document.getElementsByClassName('form-add-product')[0].style.display = "none";
+ }

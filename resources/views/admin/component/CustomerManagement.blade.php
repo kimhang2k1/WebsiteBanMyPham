@@ -18,10 +18,12 @@
         <td>Địa Chỉ</td>
         <td>SĐT</td>
     </tr>
+    @foreach($customer as $kh)
     <tr>
-        <td>KH100001</td>
-        <td>Nguyễn Thị Mộng Mơ</td>
-        <td class="px-40 text-left">Quận 1,Phường Quang Trung,Thị xã Sơn Tây,Thành phố Hà Nội</td>
-        <td>098765432</td>
+        <td>{{ $kh->IDKhachHang }}</td>
+        <td>{{ $kh->HoTen }}</td>
+        <td class="px-40 text-left">{{ $kh->SoNha }},{{ $kh->TenXa }},{{ $kh->TenQuan }},{{ $kh->TenThanhPho}}</td>
+        <td>{{ $kh->SDT }}</td>
     </tr>
+    @endforeach
 </table>

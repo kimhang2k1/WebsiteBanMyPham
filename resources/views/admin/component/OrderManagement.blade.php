@@ -15,30 +15,34 @@
     <table class="w-full text-xm">
         <tr class="font-bold">
             <td>ID Đơn Hàng</td>
-            <td>ID Khách Hàng</td>
+            <td>Tên Khách Hàng</td>
+            <td>SĐT</td>
+            <td>Địa Chỉ Giao Hàng</td>
             <td>Tên Sản Phẩm</td>
+            <td>Loại Sản Phẩm</td>
             <td>Số Lượng</td>
             <td>Ngày Đặt Hàng</td>
             <td>Ngày Giao Hàng</td>
-            <td>Địa Chỉ Giao Hàng</td>
-            <td>SĐT</td>
             <td>Trạng Thái</td>
             <td>Tác Vụ</td>
         </tr>
+        @foreach($order as $o)
         <tr>
-            <td>DELTA10000001</td>
-            <td>KH100001</td>
-            <td>Son</td>
-            <td>3</td>
-            <td>12/4/2020</td>
-            <td>14/4/2020</td>
-            <td>Quận 1,Phường Quang Trung,Thị xã Sơn Tây,Thành phố Hà Nội</td>
-            <td>098765432</td>
+            <td>{{ $o->IDDonHang}}</td>
+            <td>{{ $o->HoTen}}</td>
+            <td>0{{ $o->SDT}}</td>
+            <td>{{ $o->SoNha}}, {{ $o->TenXa}}, {{ $o->TenQuan}},{{ $o->TenThanhPho}}</td>
+            <td>{{ $o->TenSanPham}}</td>
+            <td>{{ $o->TenMau}}</td>
+            <td>{{ $o->SoLuong}}</td>
+            <td>{{ $o->NgayDatHang}}</td>
+            <td>{{ $o->NgayGiaoHang}}</td>
             <td><span class="rounded-full text-white" style="background-color: lightseagreen;border:0;padding:6px;">Đã Giao Hàng</span></td>
             <td class="text-xl">
                 <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;"></i>
                 <i class="fas fa-trash-alt" style="color:red;"></i>
             </td>
         </tr>
+        @endforeach
     </table>
 </div>
