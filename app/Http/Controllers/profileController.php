@@ -22,7 +22,7 @@ class profileController extends Controller
         ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
         ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
 
-        $diaChi = DiaChiGiaoHang::where('diachigiaohang.IDKhachHang', '=', $id)->JOIN('thongtinkhachhang', 'diachigiaohang.ID', '=', 'thongtinkhachhang.ID')
+        $diaChi = DiaChiGiaoHang::where('diachigiaohang.IDKhachHang', '=', $id)->JOIN('thongtinkhachhang', 'diachigiaohang.IDDiaChia', '=', 'thongtinkhachhang.ID')
         ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
         ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
         ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();

@@ -14,7 +14,7 @@ class DonHang extends Model
         'IDKhachHang',
         'NgayDatHang',
         'NgayGiaoHang',
-        'IDGiaoHang',
+        'IDDiaChi',
         'TrangThai'
     ];
     public static function create(
@@ -22,7 +22,7 @@ class DonHang extends Model
         $IDKhachHang,
         $NgayDatHang,
         $NgayGiaoHang,
-        $IDGiaoHang,
+        $IDDiaChi,
         $TrangThai
     ) {
         $order= new DonHang();
@@ -30,7 +30,7 @@ class DonHang extends Model
         $order->IDKhachHang = $IDKhachHang;
         $order->NgayDatHang = $NgayDatHang;
         $order->NgayGiaoHang = $NgayGiaoHang;
-        $order->IDGiaoHang = $IDGiaoHang;
+        $order->IDDiaChi = $IDDiaChi;
         $order->TrangThai = $TrangThai;
         $order->save();
     }

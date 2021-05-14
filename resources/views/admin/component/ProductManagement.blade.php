@@ -62,7 +62,7 @@
             <td>{{ $pro->NgayHetHan }}</td>
             <td><span class="rounded-full text-white" style="background-color: lightseagreen;border:0;padding:6px;">Còn Hàng</span></td>
             <td class="text-xl">
-                <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;"></i>
+                <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;" onclick = "openFormEditProduct('{{ $pro->IDSanPham }}')"></i>
                 <i class="fas fa-trash-alt" style="color:red;"></i>
             </td>
         </tr>

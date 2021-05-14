@@ -38,7 +38,7 @@ class CartController extends Controller
 
              $xa = DB::table('xa')->where('IDQuan','=',NULL)->get();
 
-             $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
+             $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.IDDiaChi')
              ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
              ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
              ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')

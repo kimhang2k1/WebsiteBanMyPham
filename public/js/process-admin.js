@@ -17,3 +17,25 @@ function openModalAddProduct() {
  function closeModalAddProduct() {
     document.getElementsByClassName('form-add-product')[0].style.display = "none";
  }
+
+ function openFormEditProduct(id) {
+    document.getElementsByClassName('form-edit-product')[0].style.display = "block";
+     $.ajax({
+         method: "GET",
+         url : 'edit-product',
+         data : {
+             IDSanPham : id
+         },
+         success:function(response) {
+            $('.form-edit-product').html(response);
+         }
+     })
+ }
+
+function closeFormEditProduct() {
+    document.getElementsByClassName('form-edit-product')[0].style.display = "none";
+}
+ 
+ 
+ 
+ 

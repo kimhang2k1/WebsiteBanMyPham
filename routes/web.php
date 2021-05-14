@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\AllProductController;
 use App\Models\Cart;
 use App\Models\Giohang;
 use Illuminate\Support\Facades\Route;
@@ -240,3 +242,12 @@ Route::get('/admin/home', [Admin\ManagementController::class, 'getInfor']);
 Route::get('/oke', function() {
     return view('admin/form');
 });
+
+Route::get('file',[Admin\FileController::class, 'index']);
+Route::post('file',[Admin\FileController::class, 'doUpload']);
+
+
+
+Route::post('/admin/them-san-pham', [Admin\AllProductController::class, 'addProduct']);
+
+Route::get('/admin/edit-product', [Admin\AllProductController::class, 'getFormProduct']);

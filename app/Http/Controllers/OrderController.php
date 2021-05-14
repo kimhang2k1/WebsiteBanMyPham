@@ -20,7 +20,7 @@ class OrderController extends Controller
            $datetime = new DateTime($currentDateTime);
            $datetime->modify('+2 day');
             $order = DB::select("SELECT IDDonHang FROM donhang ORDER BY IDDonHang DESC");
-            $IDDiaChiGiaoHang = Session::get('diaChiGiaoHang')[0]->ID;
+            $IDDiaChiGiaoHang = Session::get('diaChiGiaoHang')[0]->IDDiaChi;
             if(count($order) > 0) {
                 $string = $order[0]->IDDonHang;
                 $data = explode('DELTA',$string);
