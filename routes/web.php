@@ -251,3 +251,5 @@ Route::post('file',[Admin\FileController::class, 'doUpload']);
 Route::post('/admin/them-san-pham', [Admin\AllProductController::class, 'addProduct']);
 
 Route::get('/admin/edit-product', [Admin\AllProductController::class, 'getFormProduct']);
+
+Route::get('/admin/sua-san-pham', [Admin\AllProductController::class, 'editFormProduct']);

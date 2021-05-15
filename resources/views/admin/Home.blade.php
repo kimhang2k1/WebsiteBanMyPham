@@ -198,7 +198,7 @@
                         <p>Tổng Khách Hàng </p>
                     </div>
                 </div>
-                <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden" id = "product"> 
                     @include('admin/component/ProductManagement', ['product' =>$product, 'category' => $category])
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
@@ -254,8 +254,9 @@
                     <span class="font-bold" style="color:#2e6da4;"> Mô tả </span>
                     <textarea class="w-60 h-20 rounded-md" style="margin-left:4.5rem;" name="decription"></textarea>
                 </div>
-                <div class="flex mb-4 w-3/5 m-auto">
-                    <input type="file" name="fileImage" required="true">
+                <div class="mb-4 w-3/5 m-auto">
+                    <input type="file" name="fileImage" required="true" id = "fileImage" onchange="ImagesFileAsURL()" style="border:0;">
+                    <div id ="displayImg" style="width: 10rem;border:1px solid #ccc; margin-top:1rem;"></div>
                 </div>
                 <div class=" mb-4">
                     <span class="italic">Nếu muốn thêm ảnh để mô tả sản phẩm thì vui lòng bấm vào đây </span>
