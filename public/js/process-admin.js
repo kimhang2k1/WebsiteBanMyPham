@@ -36,17 +36,23 @@ function closeFormEditProduct() {
     document.getElementsByClassName('form-edit-product')[0].style.display = "none";
 }
 
-function editProduct(id) {
-    $.ajax({
-        method: "GET",
-        url : 'sua-san-pham',
-        data : {
-            IDSanPham : id,
-
+function editProduct() {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
+    });
+    let formData = new FormData($('#myForm')[0]);
+    formData.append('IDSP',$('#IDSP').val())
+    $.ajax({
+        method: "POST",
+        url : 'sua-san-pham',
+        data : formData,
+        contentType: false,
+        processData: false,
         success:function(response) {
            $('#product').html(response);
-
+           document.getElementsByClassName('form-edit-product')[0].style.display = "none";
         }
     })
 }

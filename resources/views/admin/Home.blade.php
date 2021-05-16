@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/Admin/home.css">
@@ -66,7 +67,7 @@
             </div>
             <div class="w-3/4" style="height: 4.25rem;background-color: steelblue;">
                 <div class="text-white pr-8 pl-3" style="float:right;line-height: 4rem;">
-                    {{ Session::get('account')[0]->Ten}}
+                    {{ Session::get('account')[0]->HoTen}}
                 </div>
                 <div class="pt-4" style="float:right">
                     <img src="/img/admin.png" class="w-8">
@@ -80,7 +81,7 @@
                         <img src="/img/admin.png" class="w-20">
                     </div>
                     <div class="w-full ml-2 font-timenewroman text-white pt-3">
-                        <p class="font-bold"> {{ Session::get('account')[0]->Ten}}</p>
+                        <p class="font-bold"> {{ Session::get('account')[0]->HoTen}}</p>
                         <p class="text-sm text-gray-200"> {{ Session::get('account')[0]->Email}}</p>
 
                     </div>
@@ -101,6 +102,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="manage w-full p-4 hover:bg-gray-300" onclick="openManagement(1)">
                         <div class="w-full flex text-white" style="padding-left: 3px;">
                             <div class="icon pr-3.5">
@@ -190,7 +192,7 @@
                         </div>
                     </div>
                     <div class="w-1/4 rounded-lg pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl" style="border:1px solid cadetblue;background-color: cadetblue;">
-                        <span class="text-3xl"> {{ count($bill) }}</span>
+                        <span class="text-3xl">{{count($bill)}}</span>
                         <p>Tổng Hóa Đơn Trong Ngày</p>
                     </div>
                     <div class="w-1/4 rounded-lg pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl" style="border:1px solid brown;background-color: brown;">
@@ -198,8 +200,13 @@
                         <p>Tổng Khách Hàng </p>
                     </div>
                 </div>
-                <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden" id = "product"> 
+                <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                    <div class="form">
+                        <h2 class="p-4 text-xl font-bold">Quản Lí Sản Phẩm</h2>
+                    </div>
+                    <div id = "product">
                     @include('admin/component/ProductManagement', ['product' =>$product, 'category' => $category])
+                    </div>  
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
                     @include('admin/component/OrderManagement', ['order' => $order])
@@ -255,8 +262,8 @@
                     <textarea class="w-60 h-20 rounded-md" style="margin-left:4.5rem;" name="decription"></textarea>
                 </div>
                 <div class="mb-4 w-3/5 m-auto">
-                    <input type="file" name="fileImage" required="true" id = "fileImage" onchange="ImagesFileAsURL()" style="border:0;">
-                    <div id ="displayImg" style="width: 10rem;border:1px solid #ccc; margin-top:1rem;"></div>
+                    <input type="file" name="fileImage" required="true" id="fileImage" onchange="ImagesFileAsURL()" style="border:0;">
+                    <div id="displayImg" style="width: 10rem;border:1px solid #ccc; margin-top:1rem;"></div>
                 </div>
                 <div class=" mb-4">
                     <span class="italic">Nếu muốn thêm ảnh để mô tả sản phẩm thì vui lòng bấm vào đây </span>

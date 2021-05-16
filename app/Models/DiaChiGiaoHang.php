@@ -10,18 +10,18 @@ class DiaChiGiaoHang extends Model
     use HasFactory;
     protected $table = "diachigiaohang";
     protected $fillable = [
-        'ID',
+        'IDDiaChi',
         'IDKhachHang', 
         'TrangThai'
 
     ];
     public static function create(
-        $ID,
+        $IDDiaChi,
         $IDKhachHang,
         $TrangThai
     ) {
         $diaChiGiaoHang= new DiaChiGiaoHang();
-        $diaChiGiaoHang->ID = $ID;
+        $diaChiGiaoHang->IDDiaChi = $IDDiaChi;
         $diaChiGiaoHang->IDKhachHang = $IDKhachHang;
         $diaChiGiaoHang->TrangThai = $TrangThai;
         $diaChiGiaoHang->save();

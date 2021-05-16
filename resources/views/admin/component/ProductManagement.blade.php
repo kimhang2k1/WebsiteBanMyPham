@@ -1,6 +1,4 @@
-<div class="form">
-    <h2 class="p-4 text-xl font-bold">Quản Lí Sản Phẩm</h2>
-</div>
+
 <div class="w-full flex">
     <div class="pl-4 flex" style="width: 70%;">
         <div class="input-search">
@@ -8,11 +6,11 @@
         </div>
         <div class="select">
             <select class="w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;">
-            @foreach($category as $cat)
+                @foreach($category as $cat)
                 <option value="">{{ $cat->TenNhom}}</option>
                 @endforeach
             </select>
-           
+
         </div>
         <div class="search">
             <button class="w-12 text-white rounded-sm" type="button" style="border:1px solid #2e6da4;height: 34px;background-color:#2e6da4 ;"><i class="fas fa-search"></i></button>
@@ -50,19 +48,21 @@
             <td>{{ $pro->IDSanPham}}</td>
             <td>{{ $pro->TenSanPham }}</td>
             <td>{{ $pro->TenNhom }}</td>
-            @if($pro->TenMau == NULL) 
+            @if($pro->TenMau == NULL)
             <td>Không có</td>
-            @else 
+            @else
             <td>{{ $pro->TenMau}}</td>
             @endif
             <td>{{ $pro->GiaSP }}</td>
-            <td><img src="/img/{{ $pro->HinhAnh }}" class="ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;"></td>
+            <td>
+                <img src="/img/{{ $pro->HinhAnh }}" class="ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;">
+            </td>
             <td>{{ $pro->TenThuongHieu }}</td>
             <td>{{ $pro->NgaySanXuat }}</td>
             <td>{{ $pro->NgayHetHan }}</td>
             <td><span class="rounded-full text-white" style="background-color: lightseagreen;border:0;padding:6px;">Còn Hàng</span></td>
             <td class="text-xl">
-                <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;" onclick = "openFormEditProduct('{{ $pro->IDSanPham }}')"></i>
+                <i class="fas fa-pen-square" style="padding:8px;color:#2e6da4;" onclick="openFormEditProduct('{{ $pro->IDSanPham }}')"></i>
                 <i class="fas fa-trash-alt" style="color:red;"></i>
             </td>
         </tr>

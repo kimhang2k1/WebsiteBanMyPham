@@ -252,4 +252,5 @@ Route::post('/admin/them-san-pham', [Admin\AllProductController::class, 'addProd
 
 Route::get('/admin/edit-product', [Admin\AllProductController::class, 'getFormProduct']);
 
-Route::get('/admin/sua-san-pham', [Admin\AllProductController::class, 'editFormProduct']);
+Route::post('/admin/sua-san-pham', [Admin\AllProductController::class, 'editFormProduct']);
+

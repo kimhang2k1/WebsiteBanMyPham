@@ -14,7 +14,7 @@ class ManagementController extends Controller
 {
     public function getInfor(Request $request) {
         $product = DB::table('sanpham')
-        ->select(DB::raw(' DISTINCT mausanpham.IDMau,sanpham.IDSanPham, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh, TenThuongHieu,NgaySanXuat, NgayHetHan'))
+        ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
         ->JOIN('nhomsanpham', 'sanpham.IDNhomSP','nhomsanpham.IDNhomSP')
         ->leftJOIN('sanphamchitiet', 'sanphamchitiet.IDSanPham','sanpham.IDSanPham')
         ->leftJOIN('mausanpham', 'sanphamchitiet.IDMau','mausanpham.IDMau')
@@ -53,13 +53,14 @@ class ManagementController extends Controller
         ->JOIN('thuonghieu', 'sanpham.IDThuongHieu','thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')->get();
         
         // tổng doanh thu trong ngày 
-        $currentDateTime = date('Y-m-d H:i:s');
+    ;
         $totalDate = DB::table('chitietdonhang')->JOIN('donhang', 'donhang.IDDonHang', 'chitietdonhang.IDDonHang')
-        ->where('NgayDatHang', '=', $currentDateTime)
+        ->whereRaw("CAST(NgayDatHang AS DATE) = ? ",[date('Y-m-d')])
         ->sum('ThanhTien');
+  
 
         // tổng hóa đơn trong ngày 
-        $bill = DonHang::where('NgayDatHang', '=',date('Y-m-d H:i:s'))->get();
+        $billToday = DonHang::whereRaw("CAST(NgayDatHang AS DATE) = ? ",[date('Y-m-d')])->get();
 
         // đếm khách hàng
         $kh = DB::table('khachhang')->get();
@@ -71,7 +72,7 @@ class ManagementController extends Controller
         $getProduct = Product::where('IDSanPham', '=', $request->IDSanPham)->get();
 
         return view('admin/home')->with('product', $product)->with('order', $order)->with('acc', $acc)->with('customer', $customer)
-        ->with('category', $category)->with('countProduct', $countProduct)->with('totalDate', $totalDate)->with('bill', $bill)
+        ->with('category', $category)->with('countProduct', $countProduct)->with('totalDate', $totalDate)->with('bill', $billToday)
         ->with('kh', $kh)->with('all_product', $all_product)->with('th', $th )->with('getProduct', $getProduct);
     }
 }

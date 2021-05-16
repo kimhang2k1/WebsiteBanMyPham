@@ -60,8 +60,8 @@ class XuLiAdressController extends Controller
          $dcGiaoHang = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
         if(count($dcGiaoHang) > 0)  
         {
-            DB::update("update diachigiaohang set ID = ?, TrangThai = 'Mặc Định'  where IDKhachHang = ? ",[$request->ID,$id]); 
-            $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
+            DB::update("update diachigiaohang set IDDiaChi = ?, TrangThai = 'Mặc Định'  where IDKhachHang = ? ",[$request->ID,$id]); 
+            $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.IDDiaChi')
             ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
             ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
             ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')
@@ -72,7 +72,7 @@ class XuLiAdressController extends Controller
         else {
             DiaChiGiaoHang::create($request->ID, $id, 'Mặc Định'); 
 
-            $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.ID')
+            $diaChiGiaoHang = DB::table('diachigiaohang')->JOIN('thongtinkhachhang', 'thongtinkhachhang.ID','=', 'diachigiaohang.IDDiaChi')
             ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
             ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
             ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')
