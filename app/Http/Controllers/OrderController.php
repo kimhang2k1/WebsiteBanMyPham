@@ -55,7 +55,6 @@ class OrderController extends Controller
                     ->delete();
                 }
                 return redirect()->to('profile')->send();
-                Session::forget('order-product');
             }
         }
        

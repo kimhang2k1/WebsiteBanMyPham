@@ -74,7 +74,7 @@ Route::get('sanphamsapxep', [productController::class, 'sapXepGia']);
 Route::get('sanphamtheothuonghieu', [productController::class, 'getSanPhambyThuongHieu']);
 
 Route::get('gio-hang', function(Request $request) {
-   
+   Session::forget('product-pay');
     $id = Session::get('user')[0]->IDKhachHang;
     $cart = DB::table('giohang')->JOIN('sanpham', 'giohang.IDSanPham', '=', 'sanpham.IDSanPham')
     ->leftJoin('mausanpham', 'mausanpham.IDMau', '=', 'giohang.IDMau')->where('IDKhachHang', '=', Session::get('user')[0]->IDKhachHang)->get();
@@ -254,3 +254,8 @@ Route::get('/admin/edit-product', [Admin\AllProductController::class, 'getFormPr
 
 Route::post('/admin/sua-san-pham', [Admin\AllProductController::class, 'editFormProduct']);
 
+Route::get('/admin/xoa-san-pham', [Admin\AllProductController::class, 'deleteProductOne']);
+Route::get('/admin/delete-product', [Admin\AllProductController::class, 'deleteProductTwo']);
+
+Route::get('/admin/search-product', [Admin\AllProductController::class, 'getSearchProduct']);
+Route::get('/admin/search-category-product', [Admin\AllProductController::class, 'getSearchCategoryProduct']);

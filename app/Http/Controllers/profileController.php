@@ -18,7 +18,7 @@ class profileController extends Controller
         $id = Session::get('user')[0]->IDKhachHang;
         $ttkh = KhachHang::where('IDKhachHang', '=', $id)->get();
         $dh = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
-        $dc = ThongTinKhachHang::whereRaw("IDKhachHang = '".$id."' and not ID = '".$dh[0]->ID."'")->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+        $dc = ThongTinKhachHang::whereRaw("IDKhachHang = '".$id."' and not ID = '".$dh[0]->IDDiaChi."'")->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
         ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
         ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
 
@@ -137,13 +137,13 @@ class profileController extends Controller
     public function editDefaultAddress(Request $request)
     {
        $id = Session::get('user')[0]->IDKhachHang;
-       DB::update("update diachigiaohang set ID = ?  where IDKhachHang = ? ",[$request->id,$id]); 
+       DB::update("update diachigiaohang set IDDiaChi = ?  where IDKhachHang = ? ",[$request->id,$id]); 
        $dh = DiaChiGiaoHang::where('IDKhachHang', '=', $id)->get();
-       $dc = ThongTinKhachHang::whereRaw("IDKhachHang = '".$id."' and not ID = '".$dh[0]->ID."'")->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
+       $dc = ThongTinKhachHang::whereRaw("IDKhachHang = '".$id."' and not ID = '".$dh[0]->IDDiaChi."'")->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
        ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
        ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
 
-       $diaChi = DiaChiGiaoHang::where('diachigiaohang.IDKhachHang', '=', $id)->JOIN('thongtinkhachhang', 'diachigiaohang.ID', '=', 'thongtinkhachhang.ID')
+       $diaChi = DiaChiGiaoHang::where('diachigiaohang.IDKhachHang', '=', $id)->JOIN('thongtinkhachhang', 'diachigiaohang.IDDiaChi', '=', 'thongtinkhachhang.ID')
        ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho','=','tinhthanhpho.IDThanhPho')
        ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
        ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();

@@ -13,13 +13,20 @@ use Illuminate\Support\Facades\DB;
 class ManagementController extends Controller
 {
     public function getInfor(Request $request) {
-        $product = DB::table('sanpham')
-        ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+        $product_detail = DB::table('sanphamchitiet')
+        ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+        ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham','sanpham.IDSanPham')
         ->JOIN('nhomsanpham', 'sanpham.IDNhomSP','nhomsanpham.IDNhomSP')
-        ->leftJOIN('sanphamchitiet', 'sanphamchitiet.IDSanPham','sanpham.IDSanPham')
-        ->leftJOIN('mausanpham', 'sanphamchitiet.IDMau','mausanpham.IDMau')
+        ->JOIN('mausanpham', 'sanphamchitiet.IDMau','mausanpham.IDMau')
         ->JOIN('thuonghieu', 'sanpham.IDThuongHieu','thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')->get();
 
+            $product = DB::table('sanpham')
+            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP','nhomsanpham.IDNhomSP')
+            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu','thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
+            ->whereNotIn('IDSanPham', function($query) {
+                $query->select('IDSanPham')->from('sanphamchitiet');
+            })->get();
+       
 
           $all_product = DB::table('sanpham')->orderBy('IDSanPham', 'DESC')->limit(1)->get();
         // select dữ liệu cho quản lí đơn hàng
@@ -51,12 +58,14 @@ class ManagementController extends Controller
         ->leftJOIN('sanphamchitiet', 'sanphamchitiet.IDSanPham','sanpham.IDSanPham')
         ->leftJOIN('mausanpham', 'sanphamchitiet.IDMau','mausanpham.IDMau')
         ->JOIN('thuonghieu', 'sanpham.IDThuongHieu','thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')->get();
+
         
         // tổng doanh thu trong ngày 
     ;
         $totalDate = DB::table('chitietdonhang')->JOIN('donhang', 'donhang.IDDonHang', 'chitietdonhang.IDDonHang')
         ->whereRaw("CAST(NgayDatHang AS DATE) = ? ",[date('Y-m-d')])
         ->sum('ThanhTien');
+        
   
 
         // tổng hóa đơn trong ngày 
@@ -73,6 +82,6 @@ class ManagementController extends Controller
 
         return view('admin/home')->with('product', $product)->with('order', $order)->with('acc', $acc)->with('customer', $customer)
         ->with('category', $category)->with('countProduct', $countProduct)->with('totalDate', $totalDate)->with('bill', $billToday)
-        ->with('kh', $kh)->with('all_product', $all_product)->with('th', $th )->with('getProduct', $getProduct);
+        ->with('kh', $kh)->with('all_product', $all_product)->with('th', $th )->with('getProduct', $getProduct)->with('product_detail', $product_detail);
     }
 }

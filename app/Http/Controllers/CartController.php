@@ -44,11 +44,11 @@ class CartController extends Controller
              ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')
              ->where('diachigiaohang.IDKhachHang', '=',$id)->get();  
              Session::put('diaChiGiaoHang', $diaChiGiaoHang);
-             
              Session::forget('product-pay');
+            
              return view('pay')->with('order', $newArray)->with('thanhPho', $thanhPho)->with('xa', $xa)->with('quan', $quan)
              ->with('diaChi', $diaChi)->with('diaChiGiaoHang', $diaChiGiaoHang);
-             
+            
         }
       
            

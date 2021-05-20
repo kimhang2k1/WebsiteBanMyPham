@@ -11,10 +11,8 @@
     <link rel="stylesheet" href="/css/Admin/home.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <script src="/js/process-admin.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
     <title>Trang Chủ</title>
     <style>
         table tr td {
@@ -168,45 +166,86 @@
                 </div>
             </div>
             <div class="w-4/5">
-                <div class="w-full flex justify-evenly  m-4 font-timenewroman managements" id="statistical">
-                    <div class="w-60 rounded-lg pl-4 pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl flex" style="border:1px solid cornflowerblue;
+                <div class=" managements" id="statistical">
+                    <div class="w-full flex justify-evenly  m-4 font-timenewroman">
+                        <div class="w-60 rounded-lg pl-4 pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl flex" style="border:1px solid cornflowerblue;
                background-color: cornflowerblue;">
-                        <div class="w-1/4 pt-3">
-                            <img src="/img/box.png" class="w-12">
+                            <div class="w-1/4 pt-3">
+                                <img src="/img/box.png" class="w-12">
+                            </div>
+                            <div class="w-3/4 ">
+                                <span class="text-3xl">{{count($countProduct)}}</span>
+                                <p>Tổng sản phẩm</p>
+                            </div>
                         </div>
-                        <div class="w-3/4 ">
-                            <span class="text-3xl">{{count($countProduct)}}</span>
-                            <p>Tổng sản phẩm</p>
-                        </div>
-
-
-                    </div>
-                    <div class="w-80 rounded-lg  pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl flex" style="border:1px solid palevioletred;
+                        <div class="w-80 rounded-lg  pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl flex" style="border:1px solid palevioletred;
                background-color:palevioletred;">
-                        <div class="w-2/12 pt-4">
-                            <img src="/img/money.png" class="w-12">
+                            <div class="w-2/12 pt-4">
+                                <img src="/img/money.png" class="w-12">
+                            </div>
+                            <div class="w-4/5 ">
+                                <span class="text-3xl">{{ number_format($totalDate) }}</span>
+                                <p>Tổng doanh thu trong ngày</p>
+                            </div>
                         </div>
-                        <div class="w-4/5 ">
-                            <span class="text-3xl">{{ number_format($totalDate) }}</span>
-                            <p>Tổng doanh thu trong ngày</p>
+                        <div class="w-1/4 rounded-lg pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl" style="border:1px solid cadetblue;background-color: cadetblue;">
+                            <span class="text-3xl">{{count($bill)}}</span>
+                            <p>Tổng Hóa Đơn Trong Ngày</p>
+                        </div>
+                        <div class="w-1/4 rounded-lg pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl" style="border:1px solid brown;background-color: brown;">
+                            <span class="text-3xl"> {{ count($kh) }}</span>
+                            <p>Tổng Khách Hàng </p>
                         </div>
                     </div>
-                    <div class="w-1/4 rounded-lg pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl" style="border:1px solid cadetblue;background-color: cadetblue;">
-                        <span class="text-3xl">{{count($bill)}}</span>
-                        <p>Tổng Hóa Đơn Trong Ngày</p>
+                    <div class="flex">
+                        <canvas id="buyers" width="600" height="400"></canvas>
                     </div>
-                    <div class="w-1/4 rounded-lg pt-8 pb-8 pr-4 text-right text-white text-xl shadow-2xl" style="border:1px solid brown;background-color: brown;">
-                        <span class="text-3xl"> {{ count($kh) }}</span>
-                        <p>Tổng Khách Hàng </p>
-                    </div>
+                    <?php
+
+                    use Illuminate\Support\Facades\DB;
+
+                    $totalDate = DB::table('chitietdonhang')->JOIN('donhang', 'donhang.IDDonHang', 'chitietdonhang.IDDonHang')
+                        ->whereRaw("CAST(NgayDatHang AS DATE) = ? ", [date('Y-m-d')])
+                        ->sum('ThanhTien');
+
+                    $json = [];
+                    $json[] = $bill;
+                    ?>
+
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
                     <div class="form">
                         <h2 class="p-4 text-xl font-bold">Quản Lí Sản Phẩm</h2>
                     </div>
-                    <div id = "product">
-                    @include('admin/component/ProductManagement', ['product' =>$product, 'category' => $category])
-                    </div>  
+                    <div class="w-full flex">
+                        <div class="pl-4 flex" style="width: 70%;">
+                            <div class="input-search">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search" placeholder="Mã / Tên Sản Phẩm" oninput="SearchProduct(this)">
+                            </div>
+                            <div class="select">
+                                <select class=" category-product w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;" name = "category" onchange="getSearchCategoryProduct()">
+                                    @foreach($category as $cat)
+                                    <option value="{{ $cat->IDNhomSP }}">{{ $cat->TenNhom}}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                           
+                        </div>
+                        <div class="flex" style="width: 30%;">
+                            <div class="insert ">
+                                <button class="ring-2 text-white w-40 leading-8 rounded-sm" style="background-color:#2e6da4;font-size:17px;" type="button" onclick="openModalAddProduct()">
+                                    <i class="fas fa-plus-circle"></i> &nbsp;&nbsp;Thêm sản phẩm </button>
+                            </div>
+                            <div class="file ml-4">
+                                <button class="text-white w-40 leading-8 rounded-sm" style="background-color:green;font-size:17px;border:0;" type="button">
+                                    <i class="fas fa-file-excel"></i> &nbsp;&nbsp;Nhập từ file </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="product">
+                        @include('admin/component/ProductManagement', ['product' =>$product, 'product_detail' => $product_detail])
+                    </div>
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
                     @include('admin/component/OrderManagement', ['order' => $order])
@@ -295,6 +334,24 @@
     <div class="form-edit-product hidden" style="border:1px solid #ccc;width: 42%;height: 90%;overflow-y: auto;">
         @include('admin/component/form-edit-product', ['category' => $category , 'th' => $th, 'getProduct' => $getProduct])
     </div>
+
 </body>
+<script>
+    var buyerData = {
+        labels: ["January", "February", "March", "April", "May", "June"],
+        datasets: [{
+            fillColor: "rgba(172,194,132,0.4)",
+            strokeColor: "#ACC26D",
+            pointColor: "#fff",
+            pointStrokeColor: "#9DB86D",
+            data: [203, 156, 99, 251, 305, 247]
+        }]
+    }
+    // get line chart canvas
+    var buyers = document.getElementById('buyers').getContext('2d');
+    // draw line chart
+    new Chart(buyers).Line(buyerData);
+    // pie chart data
+</script>
 
 </html>

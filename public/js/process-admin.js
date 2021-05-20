@@ -86,4 +86,55 @@ function ImagesFile() {
         fileReader.readAsDataURL(fileToLoad);
     }
 }
- 
+function deleteProduct1(IDSPCT) {
+    $.ajax({
+        method : "GET",
+        url : "xoa-san-pham",
+        data : {
+            IDSPCT : IDSPCT
+        },
+        success:function(response) {
+            $('#product').html(response);
+        }
+        
+    })
+}
+function deleteProduct2(IDSP) {
+    $.ajax({
+        method : "GET",
+        url : "delete-product",
+        data : {
+            IDSP : IDSP
+        },
+        success:function(response) {
+            $('#product').html(response);
+        }
+        
+    })
+}
+
+function SearchProduct(event) {
+    $.ajax({
+        method : "GET", 
+        url : "search-product",
+        data: {
+            ID : document.getElementsByName('search')[0].value
+        },
+        success:function(response) {
+            $('#product').html(response);
+        }
+    })
+}
+function getSearchCategoryProduct() {
+    $.ajax({
+        method : "GET", 
+        url : "search-category-product",
+        data: {
+            ID : document.getElementsByName('search')[0].value,
+            IDNSP : document.getElementsByName('category')[0].value
+        },
+        success:function(response) {
+            $('#product').html(response);
+        }
+    })
+}
