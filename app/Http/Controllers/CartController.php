@@ -16,6 +16,7 @@ class CartController extends Controller
 {
   
     public function getProductInCart(Request $request) {
+      
         $id = Session::get('user')[0]->IDKhachHang;
         $product_pay = session()->has('product-pay') ? Session::get('product-pay') : array();   
         if (count($product_pay) > 0) {

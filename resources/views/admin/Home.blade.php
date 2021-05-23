@@ -220,17 +220,18 @@
                     <div class="w-full flex">
                         <div class="pl-4 flex" style="width: 70%;">
                             <div class="input-search">
-                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search" placeholder="Mã / Tên Sản Phẩm" oninput="SearchProduct(this)">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search" placeholder="Mã / Tên Sản Phẩm" oninput="getSearchProduct(this)">
                             </div>
                             <div class="select">
-                                <select class=" category-product w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;" name = "category" onchange="getSearchCategoryProduct()">
+                                <select class=" category-product w-40 mx-4 pl-4 rounded-md" style="border:1px solid #ccc;height:35px;" name="category" onchange="getSearchProduct()">
+                                    <option value="">Tất Cả</option>
                                     @foreach($category as $cat)
                                     <option value="{{ $cat->IDNhomSP }}">{{ $cat->TenNhom}}</option>
                                     @endforeach
                                 </select>
 
                             </div>
-                           
+
                         </div>
                         <div class="flex" style="width: 30%;">
                             <div class="insert ">
@@ -248,16 +249,71 @@
                     </div>
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
-                    @include('admin/component/OrderManagement', ['order' => $order])
+                    <div class="form">
+                        <h2 class="p-4 text-xl font-bold">Quản Lí Đơn Hàng</h2>
+                    </div>
+                    <div class="w-full flex">
+                        <div class="pl-4 flex" style="width: 70%;">
+                            <div class="input-search mr-1">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search_order" placeholder="Mã Đơn Hàng" oninput="SearchOrder()">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="page-order">
+                        @include('admin/component/OrderManagement', ['order' => $order])
+                    </div>
+
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
-                    @include('admin/component/AccountManagement', ['acc' => $acc])
+                    <div class="form">
+                        <h2 class="p-4 text-xl font-bold">Quản Lí Tài Khoản</h2>
+                    </div>
+                    <div class="w-full flex">
+                        <div class="pl-4 flex">
+                            <div class="input-search mr-1">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search_account" placeholder="Mã Khách Hàng" oninput="SearchAccount()">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="page_account">
+                        @include('admin/component/AccountManagement', ['acc' => $acc])
+                    </div>
+
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
-                    @include('admin/component/CustomerManagement', ['customer' => $customer])
+                    <div class="form">
+                        <h2 class="p-4 text-xl font-bold">Quản Lí Khách Hàng</h2>
+                    </div>
+                    <div class="w-full flex">
+                        <div class="pl-4 flex">
+                            <div class="input-search mr-1">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search_customer" placeholder="Mã / Tên Khách Hàng" oninput="SearchCustomer()">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="page_customer">
+                        @include('admin/component/CustomerManagement', ['customer' => $customer])
+                    </div>
+
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
+                    <div class="form">
+                        <h2 class="p-4 text-xl font-bold">Quản Lí Danh Mục Sản Phẩm</h2>
+                    </div>
+                    <div class="w-full flex">
+                        <div class="pl-4 flex" style="width: 80%;">
+                            <div class="input-search mr-1">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search_category" placeholder="Mã / Tên Sản Phẩm" oninput = "SearchCategory()">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id = "page_category">
                     @include('admin/component/CategoryManagement', ['category' =>$category])
+                    </div>
+
+                  
                 </div>
 
             </div>
@@ -293,8 +349,16 @@
                     </select>
                 </div>
                 <div class="flex mb-4">
-                    <span class="font-bold" style="color:#2e6da4;">Giá Sản Phẩm </span>
-                    <input class=" money w-80 rounded-md leading-8 pl-4 ml-4" type="text" name="price" placeholder="Nhập giá sản phẩm">
+                    <span class="font-bold" style="color:#2e6da4;">Giá Gốc </span>
+                    <input class=" money w-80 rounded-md leading-8 pl-4 ml-14" type="text" name="price_1" placeholder="Nhập giá gốc sản phẩm">
+                </div>
+                <div class="flex mb-4">
+                    <span class="font-bold" style="color:#2e6da4;">Giá Bán Ra </span>
+                    <input class=" money w-80 rounded-md leading-8 pl-4 ml-8" type="text" name="price" placeholder="Nhập giá sản phẩm">
+                </div>
+                <div class="flex mb-4">
+                    <span class="font-bold" style="color:#2e6da4;">Số Lượng </span>
+                    <input class=" money w-80 rounded-md leading-8 pl-4 ml-12" type="number" name="amount">
                 </div>
                 <div class="flex mb-4">
                     <span class="font-bold" style="color:#2e6da4;"> Mô tả </span>

@@ -14,6 +14,8 @@ class Product extends Model
         'TenSanPham',
         'HinhAnh',
         'GiaSP',
+        'GiaNhap',
+        'SoLuong',
         'IDNhomSP',
         'IDThuongHieu',
         'MoTa',
@@ -26,6 +28,8 @@ class Product extends Model
         $TenSanPham,
         $HinhAnh,
         $GiaSP,
+        $GiaNhap,
+        $SoLuong,
         $IDNhomSP,
         $IDThuongHieu,
         $MoTa,
@@ -38,6 +42,8 @@ class Product extends Model
         $pro->TenSanPham = $TenSanPham;
         $pro->HinhAnh = $HinhAnh;
         $pro->GiaSP = $GiaSP;
+        $pro->GiaNhap = $GiaNhap;
+        $pro->SoLuong = $SoLuong;
         $pro->IDNhomSP = $IDNhomSP;
         $pro->IDThuongHieu = $IDThuongHieu;
         $pro->MoTa = $MoTa;

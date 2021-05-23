@@ -139,5 +139,16 @@ function changeDefaultAddress(id) {
         }
     })
 }
-
+function acceptProduct(IDDonHang) {
+    $.ajax({
+        method : "GET",
+        url: "check-order-customer",
+        data : {
+            ID : IDDonHang
+        },
+        success:function(response) {
+            $('#billcustomer').html(response);
+        }
+    })
+}
 

@@ -26,7 +26,7 @@ class OrderController extends Controller
                 $data = explode('DELTA',$string);
                 $number = $data[1];
                 $number++;
-                DonHang::create('DELTA'.$number,$id,$currentDateTime, $datetime->format('Y-m-d H:i:s'), $IDDiaChiGiaoHang, NULL);
+                DonHang::create('DELTA'.$number,$id,$currentDateTime, $datetime->format('Y-m-d H:i:s'), $IDDiaChiGiaoHang, 'Chưa Giao Hàng');
             }
             else {
                 $string = "DELTA1000000";

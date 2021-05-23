@@ -43,8 +43,6 @@ class profileController extends Controller
                     ->get();                 
                 }
              
-               
-                 
               
              
             
@@ -148,6 +146,24 @@ class profileController extends Controller
        ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan','=','quanhuyen.IDQuan')
        ->leftJOIN('xa', 'thongtinkhachhang.IDXa','=','xa.IDXa')->get();
        return view('component/allMyAddress')->with('dc', $dc)->with('diaChi', $diaChi);
+    }
+
+    public function checkBill(Request $request) {
+        $id = Session::get('user')[0]->IDKhachHang;
+        DB::update("update DonHang set TrangThai = 'Đã Giao Hàng' where IDDonHang = ? ",[$request->ID]);
+        $order = DB::table('donhang')->where('IDKhachHang', '=', $id)->get();
+        if(count($order) > 0) {
+            foreach($order as $key =>$value) {
+                    $bill = DB::table('donhang')->where('donhang.IDDonHang', '=', $order[$key]->IDDonHang)
+                    ->JOIN('chitietdonhang', 'donhang.IDDonHang', '=', 'chitietdonhang.IDDonHang')
+                    ->JOIN('sanpham', 'chitietdonhang.IDSanPham', '=','sanpham.IDSanPham')
+                    ->leftJOIN('mausanpham', 'mausanpham.IDMau', '=', 'chitietdonhang.IDMau')
+                    ->get();                 
+                }
+             
+              
+       return view('component/bill')->with('order', $order);
+}
     }
 
 }

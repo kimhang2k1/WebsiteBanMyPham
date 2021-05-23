@@ -116,7 +116,7 @@
                     </div>
                     <div class="product-name">
                         <h3>
-                           <a href = "{{ url('sanpham/thongtinsanpham/'.$product[$i]->IDSanPham) }}" style = "text-decoration:none;color:black;"><p>{{ $product[$i]->TenSanPham }}</p></a>
+                           <a href = "{{ url('sanpham/thongtinsanpham/'.$product[$i]->IDSanPham.'&&'.$product[$i]->IDNhomSP) }}" style = "text-decoration:none;color:black;"><p>{{ $product[$i]->TenSanPham }}</p></a>
                         </h3>
                     </div>
                     <div class="price-product">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="button-cart">
                         <a href="#">
-                            <p>THÊM VÀO GIỎ</p>
+                            <p  onclick="window.location.href='{{ url('sanpham/thongtinsanpham/'.$product[$i]->IDSanPham.'&&'.$product[$i]->IDNhomSP)}}'">Xem Chi Tiết</p>
                         </a>
                     </div>
                 </div>

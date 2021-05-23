@@ -7,6 +7,7 @@
             <td>Nhóm Sản Phẩm</td>
             <td>Màu Sản Phẩm</td>
             <td>Giá Sản Phẩm</td>
+            <td>Số Lượng</td>
             <td>Hình Ảnh</td>
             <td>Thương Hiệu</td>
             <td>Ngày Sản Xuất</td>
@@ -25,6 +26,7 @@
             <td>{{ $pro->TenMau}}</td>
             @endif
             <td>{{ $pro->GiaSP }}</td>
+            <td>{{ $pro->soluong }}</td>
             <td>
                 <img src="/img/{{ $pro->HinhAnh }}" class="ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;">
             </td>
@@ -45,6 +47,7 @@
             <td>{{ $pro->TenNhom }}</td>
             <td>Không có</td>
             <td>{{ $pro->GiaSP }}</td>
+            <td>{{ $pro->soluong }}</td>
             <td>
                 <img src="/img/{{ $pro->HinhAnh }}" class="ml-6" style="width: 40px;margin-top:1px;margin-bottom:2px;">
             </td>

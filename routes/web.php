@@ -226,6 +226,11 @@ Route::get('sua-dia-chi', [profileController::class, 'editAddressCustomer']);
 
 Route::get('/thay-doi-dia-chi', [profileController::class, 'editDefaultAddress']);
 
+Route::get('check-order-customer', [profileController::class, 'checkBill']);
+
+
+
+// ADMIN
 
 Route::get('/admin/login', function() {
     return view('admin/login');
@@ -258,4 +263,8 @@ Route::get('/admin/xoa-san-pham', [Admin\AllProductController::class, 'deletePro
 Route::get('/admin/delete-product', [Admin\AllProductController::class, 'deleteProductTwo']);
 
 Route::get('/admin/search-product', [Admin\AllProductController::class, 'getSearchProduct']);
-Route::get('/admin/search-category-product', [Admin\AllProductController::class, 'getSearchCategoryProduct']);
+Route::get('/admin/search-order', [Admin\ProcessOrderManagemnet::class, 'getSearchOrder']);
+
+Route::get('/admin/search-account', [Admin\ProcessManagement::class, 'getSearchAccount']);
+Route::get('/admin/search-customer', [Admin\ProcessManagement::class, 'getSearchCustomer']);
+Route::get('/admin/search-category', [Admin\ProcessManagement::class, 'getSearchCategory']);

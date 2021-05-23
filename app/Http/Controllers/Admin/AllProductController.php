@@ -28,6 +28,8 @@ class AllProductController extends Controller
                 $request->nameProduct,
                 $file,
                 $request->price,
+                $request->price_1,
+                $request->amount,
                 $request->groupProduct,
                 $request->thuongHieu,
                 $request->decription,
@@ -63,9 +65,8 @@ class AllProductController extends Controller
                     $request->hh, $request->tl, $request->status, $request->IDSP
                 ]
             );
-
             $product_detail = DB::table('sanphamchitiet')
-                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, soluong,GiaNhap,GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
                 ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
                 ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
                 ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
@@ -77,8 +78,6 @@ class AllProductController extends Controller
                 ->whereNotIn('IDSanPham', function ($query) {
                     $query->select('IDSanPham')->from('sanphamchitiet');
                 })->get();
-
-
             return view('admin/component/ProductManagement')->with('product', $product);
         } else {
             DB::update(
@@ -90,7 +89,7 @@ class AllProductController extends Controller
                 ]
             );
             $product_detail = DB::table('sanphamchitiet')
-                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, soluong,GiaNhap,GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
                 ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
                 ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
                 ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
@@ -103,7 +102,6 @@ class AllProductController extends Controller
                     $query->select('IDSanPham')->from('sanphamchitiet');
                 })->get();
 
-
             return view('admin/component/ProductManagement')->with('product', $product)->with('product_detail', $product_detail);
         }
     }
@@ -111,7 +109,7 @@ class AllProductController extends Controller
     {
         DB::table('sanphamchitiet')->where('IDSanPhamCT', '=', $request->IDSPCT)->delete();
         $product_detail = DB::table('sanphamchitiet')
-            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, soluong,GiaNhap,GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
             ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
             ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
             ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
@@ -129,7 +127,7 @@ class AllProductController extends Controller
     {
         DB::table('sanpham')->where('IDSanPham', '=', $request->IDSP)->delete();
         $product_detail = DB::table('sanphamchitiet')
-            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham,soluong,GiaNhap,GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
             ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
             ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
             ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
@@ -145,65 +143,75 @@ class AllProductController extends Controller
     }
     public function getSearchProduct(Request $request)
     {
+        if ($request->ID != NULL && $request->IDNSP == NUll) {
             $product_detail = DB::table('sanphamchitiet')
-            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
-            ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
-            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
-            ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
-            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')
-            ->whereRaw("sanpham.IDSanPham LIKE '%" . $request->ID . "%' OR TenSanPham LIKE '%" . $request->ID . "%' ")->orderby('sanpham.IDSanPham', 'ASC')->get();
+                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham,soluong, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+                ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')
+                ->whereRaw("sanpham.IDSanPham LIKE '%" . $request->ID . "%' OR TenSanPham LIKE '%" . $request->ID . "%' ")->orderby('sanpham.IDSanPham', 'ASC')->get();
 
 
-        $product = DB::table('sanpham')
-            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
-            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')
-            ->whereRaw("IDSanPham LIKE '%" . $request->ID . "%'
+            $product = DB::table('sanpham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')
+                ->whereRaw("IDSanPham LIKE '%" . $request->ID . "%'
         OR TenSanPham LIKE '%" . $request->ID . "%' ")
-            ->whereNotIn('IDSanPham', function ($query) {
-                $query->select('IDSanPham')->from('sanphamchitiet');
-            })->get();
+                ->whereNotIn('IDSanPham', function ($query) {
+                    $query->select('IDSanPham')->from('sanphamchitiet');
+                })->get();
 
-        return view('/admin/component/ProductManagement')->with('product_detail', $product_detail)->with('product', $product);
-       
-    }
-    public function getSearchCategoryProduct(Request $request) {
-        if($request->ID == NULL) {
-            $product_detail = DB::table('sanphamchitiet')
-            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
-            ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
-            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
-            ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
-            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
-            ->where('sanpham.IDNhomSP', '=', $request->IDNSP)->get();
-
-        $product = DB::table('sanpham')
-            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
-            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
-            ->where('sanpham.IDNhomSP', '=', $request->IDNSP)
-            ->whereNotIn('IDSanPham', function ($query) {
-                $query->select('IDSanPham')->from('sanphamchitiet');
-            })->get();
             return view('/admin/component/ProductManagement')->with('product_detail', $product_detail)->with('product', $product);
-       
-        }
-        else {
+        } else if ($request->ID != NULL && $request->IDNSP != NULL) {
             $product_detail = DB::table('sanphamchitiet')
-            ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
-            ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
-            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
-            ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
-            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
-            ->whereRaw("sanpham.IDNhomSP = '".$request->IDNSP."' and sanpham.IDSanPham LIKE '%" . $request->ID . "%' OR TenSanPham LIKE '%" . $request->ID . "%' and sanpham.IDNhomSP = '".$request->IDNSP."' ")->get();
+                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, soluong,GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+                ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
+                ->whereRaw("sanpham.IDNhomSP = '" . $request->IDNSP . "' and sanpham.IDSanPham LIKE '%" . $request->ID . "%' OR TenSanPham LIKE '%" . $request->ID . "%' and sanpham.IDNhomSP = '" . $request->IDNSP . "' ")->get();
 
-        $product = DB::table('sanpham')
-            ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
-            ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
-            ->whereRaw("sanpham.IDNhomSP = '".$request->IDNSP."' and sanpham.IDSanPham LIKE '%" . $request->ID . "%' OR TenSanPham LIKE '%" . $request->ID . "%' and sanpham.IDNhomSP = '".$request->IDNSP."' ")
-            ->whereNotIn('IDSanPham', function ($query) {
-                $query->select('IDSanPham')->from('sanphamchitiet');
-            })->get();
+            $product = DB::table('sanpham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
+                ->whereRaw("sanpham.IDNhomSP = '" . $request->IDNSP . "' and sanpham.IDSanPham LIKE '%" . $request->ID . "%' OR TenSanPham LIKE '%" . $request->ID . "%' and sanpham.IDNhomSP = '" . $request->IDNSP . "' ")
+                ->whereNotIn('IDSanPham', function ($query) {
+                    $query->select('IDSanPham')->from('sanphamchitiet');
+                })->get();
+                return view('/admin/component/ProductManagement')->with('product_detail', $product_detail)->with('product', $product);
+        } else if ($request->IDNSP == NULL && $request->ID == NULL) {
+            $product_detail = DB::table('sanphamchitiet')
+                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, soluong,GiaNhap,GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+                ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')->get();
+
+            $product = DB::table('sanpham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
+                ->whereNotIn('IDSanPham', function ($query) {
+                    $query->select('IDSanPham')->from('sanphamchitiet');
+                })->get();
+                return view('/admin/component/ProductManagement')->with('product_detail', $product_detail)->with('product', $product);
+        } else {
+            $product_detail = DB::table('sanphamchitiet')
+                ->select(DB::raw(' DISTINCT mausanpham.IDMau, sanpham.IDSanPham, IDSanPhamCT, TenSanPham, soluong, GiaSP,TenNhom,TenMau, sanpham.HinhAnh,TenThuongHieu,NgaySanXuat, NgayHetHan'))
+                ->leftJOIN('sanpham', 'sanphamchitiet.IDSanPham', 'sanpham.IDSanPham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('mausanpham', 'sanphamchitiet.IDMau', 'mausanpham.IDMau')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
+                ->where('sanpham.IDNhomSP', '=', $request->IDNSP)->get();
+
+            $product = DB::table('sanpham')
+                ->JOIN('nhomsanpham', 'sanpham.IDNhomSP', 'nhomsanpham.IDNhomSP')
+                ->JOIN('thuonghieu', 'sanpham.IDThuongHieu', 'thuonghieu.IDThuongHieu')->orderby('sanpham.IDSanPham', 'ASC')
+                ->where('sanpham.IDNhomSP', '=', $request->IDNSP)
+                ->whereNotIn('IDSanPham', function ($query) {
+                    $query->select('IDSanPham')->from('sanphamchitiet');
+                })->get();
             return view('/admin/component/ProductManagement')->with('product_detail', $product_detail)->with('product', $product);
-       
         }
     }
 }
