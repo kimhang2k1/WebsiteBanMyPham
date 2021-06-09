@@ -11,19 +11,16 @@ class KhachHang extends Model
     protected $table = 'khachhang';
     protected $fillable = [
         'IDKhachHang',
-        'TenDangNhap',
         'Email',
         'MatKhau',
     ];
     public static function create(
         $IDKhachHang,
-        $TenDN,
         $Email,
         $MatKhau
     ) {
         $kh= new KhachHang();
         $kh->IDKhachHang = $IDKhachHang;
-        $kh->TenDangNhap = $TenDN;
         $kh->Email = $Email;
         $kh->MatKhau = $MatKhau;
         $kh->save();

@@ -1,5 +1,5 @@
 
-<div class="max-w-full overflow-x-auto w-full ml-1 mt-4">
+<div class="max-w-full overflow-x-auto w-full ml-1 mt-4" style = "height:40em;">
     <table class="w-full text-xm">
         <tr class="font-bold">
             <td>ID Đơn Hàng</td>

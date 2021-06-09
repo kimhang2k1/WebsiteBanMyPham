@@ -62,12 +62,20 @@ class ManagementController extends Controller
 
 
             // tổng doanh thu trong ngày 
-        ;
+      
         $totalDate = DB::table('chitietdonhang')->JOIN('donhang', 'donhang.IDDonHang', 'chitietdonhang.IDDonHang')
             ->whereRaw("CAST(NgayDatHang AS DATE) = ? ", [date('Y-m-d')])
             ->sum('ThanhTien');
 
-
+            $orderToday = DonHang::select(DB::raw('donhang.IDDonHang, HoTen, SDT, TenSanPham, TenMau, chitietdonhang.SoLuong, NgayDatHang,SoNha, TenThanhPho, TenQuan, TenXa'))
+            ->leftJOIN('diachigiaohang', 'diachigiaohang.IDDiaChi', 'donhang.IDDiaChi')
+            ->JOIN('chitietdonhang', 'donhang.IDDonHang', 'chitietdonhang.IDDonHang')
+            ->leftJOIN('thongtinkhachhang', 'thongtinkhachhang.ID', 'donhang.IDDiaChi')
+            ->leftJOIN('sanpham', 'sanpham.IDSanPham', 'chitietdonhang.IDSanPham')
+            ->leftJOIN('mausanpham', 'mausanpham.IDMau', 'chitietdonhang.IDMau')
+            ->leftJOIN('tinhthanhpho', 'thongtinkhachhang.IDThanhPho', '=', 'tinhthanhpho.IDThanhPho')
+            ->leftJOIN('quanhuyen', 'thongtinkhachhang.IDQuan', '=', 'quanhuyen.IDQuan')
+            ->leftJOIN('xa', 'thongtinkhachhang.IDXa', '=', 'xa.IDXa')->whereRaw("CAST(NgayDatHang AS DATE) = ? ", [date('Y-m-d')])->get();
 
         // tổng hóa đơn trong ngày 
         $billToday = DonHang::whereRaw("CAST(NgayDatHang AS DATE) = ? ", [date('Y-m-d')])->get();
@@ -81,8 +89,18 @@ class ManagementController extends Controller
 
         $getProduct = Product::where('IDSanPham', '=', $request->IDSanPham)->get();
 
+        $check = DB::table('donhang')->select(DB::raw('TrangThai, COUNT(TrangThai) as count'))->groupBy('TrangThai')->get();
+        $data = [];
+        foreach($check as $row) {
+            $data['label'][] = $row->TrangThai;
+            $data['data'][] = (int) $row->count;
+          }
+       
+
+
         return view('admin/home')->with('product', $product)->with('order', $order)->with('acc', $acc)->with('customer', $customer)
             ->with('category', $category)->with('countProduct', $countProduct)->with('totalDate', $totalDate)->with('bill', $billToday)
-            ->with('kh', $kh)->with('all_product', $all_product)->with('th', $th)->with('getProduct', $getProduct)->with('product_detail', $product_detail);
+            ->with('kh', $kh)->with('all_product', $all_product)->with('th', $th)->with('getProduct', $getProduct)->with('product_detail', $product_detail)
+            ->with('data', json_encode($data))->with('orderToday', $orderToday);
     }
 }

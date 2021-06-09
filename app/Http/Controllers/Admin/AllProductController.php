@@ -78,7 +78,7 @@ class AllProductController extends Controller
                 ->whereNotIn('IDSanPham', function ($query) {
                     $query->select('IDSanPham')->from('sanphamchitiet');
                 })->get();
-            return view('admin/component/ProductManagement')->with('product', $product);
+            return view('admin/component/ProductManagement')->with('product', $product)->with('product_detail', $product_detail);
         } else {
             DB::update(
                 "update sanpham set TenSanPham =  ?, GiaSP = ?, IDNhomSP = ? , IDThuongHieu = ?, 

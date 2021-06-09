@@ -13,6 +13,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/process-admin.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
     <title>Trang Chủ</title>
     <style>
         table tr td {
@@ -53,6 +57,10 @@
 
         textarea {
             border: 1px solid #ccc;
+        }
+
+        #pie-chart {
+            height: 400px;
         }
     </style>
 </head>
@@ -198,19 +206,40 @@
                         </div>
                     </div>
                     <div class="flex">
-                        <canvas id="buyers" width="600" height="400"></canvas>
+                        <div class="w-1/2">
+                            <canvas id="pie-chart"></canvas>
+                        </div>
+                        <div class="w-1/2 mt-1">
+                            <p class = "text-center font-bold font-timenewroman" style="font-size:18px;">Các Đơn Hàng Trong Ngày Hôm Nay</p>
+                            <div class="max-w-full overflow-x-auto ml-1 mt-4 font-timenewroman" style="border:1px solid #ccc;border:1px solid #ccc;width: 95%;">
+                                <table class="w-full text-xm">
+                                    <tr class="font-bold">
+                                        <td>ID Đơn Hàng</td>
+                                        <td>Tên Khách Hàng</td>
+                                        <td>SĐT</td>
+                                        <td>Địa Chỉ Giao Hàng</td>
+                                        <td>Tên Sản Phẩm</td>
+                                        <td>Loại Sản Phẩm</td>
+                                        <td>Số Lượng</td>
+                                        <td>Ngày Đặt Hàng</td>
+                                    </tr>
+                                    @foreach($orderToday as $o)
+                                    <tr>
+                                        <td>{{ $o->IDDonHang}}</td>
+                                        <td>{{ $o->HoTen}}</td>
+                                        <td>0{{ $o->SDT}}</td>
+                                        <td>{{ $o->SoNha}}, {{ $o->TenXa}}, {{ $o->TenQuan}},{{ $o->TenThanhPho}}</td>
+                                        <td>{{ $o->TenSanPham}}</td>
+                                        <td>{{ $o->TenMau}}</td>
+                                        <td>{{ $o->SoLuong}}</td>
+                                        <td>{{ $o->NgayDatHang}}</td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
-                    <?php
-
-                    use Illuminate\Support\Facades\DB;
-
-                    $totalDate = DB::table('chitietdonhang')->JOIN('donhang', 'donhang.IDDonHang', 'chitietdonhang.IDDonHang')
-                        ->whereRaw("CAST(NgayDatHang AS DATE) = ? ", [date('Y-m-d')])
-                        ->sum('ThanhTien');
-
-                    $json = [];
-                    $json[] = $bill;
-                    ?>
 
                 </div>
                 <div class="w-full border-2 border-gray-100 bg-white font-timenewroman managements hidden">
@@ -304,16 +333,16 @@
                     <div class="w-full flex">
                         <div class="pl-4 flex" style="width: 80%;">
                             <div class="input-search mr-1">
-                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search_category" placeholder="Mã / Tên Sản Phẩm" oninput = "SearchCategory()">
+                                <input class=" pl-4 w-60 leading-8 rounded-md" style="border:1px solid #ccc;" type="text" name="search_category" placeholder="Mã / Tên Sản Phẩm" oninput="SearchCategory()">
                             </div>
 
                         </div>
                     </div>
-                    <div id = "page_category">
-                    @include('admin/component/CategoryManagement', ['category' =>$category])
+                    <div id="page_category">
+                        @include('admin/component/CategoryManagement', ['category' =>$category])
                     </div>
 
-                  
+
                 </div>
 
             </div>
@@ -401,21 +430,58 @@
 
 </body>
 <script>
-    var buyerData = {
-        labels: ["January", "February", "March", "April", "May", "June"],
-        datasets: [{
-            fillColor: "rgba(172,194,132,0.4)",
-            strokeColor: "#ACC26D",
-            pointColor: "#fff",
-            pointStrokeColor: "#9DB86D",
-            data: [203, 156, 99, 251, 305, 247]
-        }]
-    }
-    // get line chart canvas
-    var buyers = document.getElementById('buyers').getContext('2d');
-    // draw line chart
-    new Chart(buyers).Line(buyerData);
-    // pie chart data
+    $(function() {
+        //get the pie chart canvas
+        var cData = JSON.parse(`<?php echo $data; ?>`);
+        var ctx = $("#pie-chart");
+
+        //pie chart data
+        var data = {
+            labels: cData.label,
+            datasets: [{
+                label: "Bill Count",
+                data: cData.data,
+                backgroundColor: [
+                    "#CC0000",
+                    "#FFCC33",
+                ],
+                borderColor: [
+                    "#CC0000",
+                    "#FFCC33",
+                ],
+                borderWidth: [1, 1, 1, 1, 1, 1, 1]
+            }]
+        };
+
+        //options
+        var options = {
+            responsive: true,
+            maintainAspectRatio: true,
+            title: {
+                display: true,
+                position: "top",
+                text: "Biểu Đồ Thống Kê Đơn Hàng",
+                fontSize: 16,
+                fontColor: "#111"
+            },
+            legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                    fontColor: "#333",
+                    fontSize: 16
+                }
+            }
+        };
+
+        //create Pie Chart class object
+        var chart1 = new Chart(ctx, {
+            type: "pie",
+            data: data,
+            options: options
+        });
+
+    });
 </script>
 
 </html>
